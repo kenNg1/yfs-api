@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false
 		},
+		validEmail: {
+			type: DataTypes.BOOLEAN
+  		},
 		link_expiry: {
 			type: DataTypes.DATE,
 			allowNull: false

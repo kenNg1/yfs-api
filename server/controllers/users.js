@@ -112,16 +112,27 @@ module.exports = {
 				})
 			.then(user => {
 				if (!user) {
-					console.log(user.linkExpiry)
 					return res.status(400).send({success: false, message: 'Email validation invalid'});
-				}
+				} 
 				
+				if (user.validEmail == true) {
+					return res.status(400).send({success: false, message: 'User already validated'});		
+				} 
+				
+				const now = Date.now();
+				if (now>user.link_expiry){
+					return res.status(400).send({success: false, message: 'Link expired'});					
+				}
+
 				const data = {
 					id: user.id,
 					username: user.username,
 					email: user.email
 				}
-				return res.status(200).send(data);
+				user
+				.update({ validEmail: true}).then(()=>{
+					return res.status(200).send(data);
+				})
 
 			})
 			.catch(error => res.status(400).send(error));

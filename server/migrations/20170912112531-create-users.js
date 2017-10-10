@@ -30,6 +30,9 @@ module.exports = {
 			link: {
 				type: Sequelize.STRING
       },
+			validEmail: {
+				type: Sequelize.BOOLEAN
+      },
 			link_expiry: {
 				type: Sequelize.DATE
       },
