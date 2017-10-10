@@ -6,7 +6,17 @@ module.exports = (sequelize, DataTypes) => {
     country: DataTypes.STRING,
     nickname: DataTypes.STRING,
     image: DataTypes.STRING,
-    contact: DataTypes.STRING
+    schoolName: DataTypes.STRING,
+    gender: DataTypes.STRING,
+    dob: DataTypes.DATE,
+    mobileNumber: DataTypes.STRING,
+    googleSlides: DataTypes.STRING,
+    googleDocs: DataTypes.STRING,
+    microsoftOffice: DataTypes.STRING,
+    willGoUni: DataTypes.BOOLEAN,
+    desiredUniversity: DataTypes.STRING,
+    graduationPlans: DataTypes.TEXT,
+    heardThrough: DataTypes.STRING   
   }, {
     classMethods: {
       associate: function(models) {

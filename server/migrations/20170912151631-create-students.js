@@ -23,9 +23,17 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
-      contact: {
-        type: Sequelize.STRING
-      },
+      schoolName: Sequelize.STRING,
+      gender: Sequelize.STRING,
+      dob: Sequelize.DATE,
+      mobileNumber: Sequelize.STRING,
+      googleSlides: Sequelize.STRING,
+      googleDocs: Sequelize.STRING,
+      microsoftOffice: Sequelize.STRING,
+      willGoUni: Sequelize.BOOLEAN,
+      desiredUniversity: Sequelize.STRING,
+      graduationPlans: Sequelize.TEXT,
+      heardThrough: Sequelize.STRING,  
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -32,7 +32,19 @@ module.exports = {
 							firstName: req.body.firstName,
 							lastName: req.body.lastName,
 							country: req.body.country,
-							image: 'https://cdn4.iconfinder.com/data/icons/follower/512/login-man-person-human-body-512.png'
+							nickname: req.body.nickname,
+							image: 'https://cdn4.iconfinder.com/data/icons/follower/512/login-man-person-human-body-512.png',
+							schoolName: req.body.schoolName,
+							gender: req.body.gender,
+							dob: req.body.dob,
+							mobileNumber: req.body.mobileNumber,
+							googleSlides: req.body.googeSlides,
+							googleDocs: req.body.googeDocs,
+							microsoftOffice: req.body.microsoftOffice,
+							willGoUni: req.body.willGoUni,
+							desiredUniversity: req.body.desiredUniversity,
+							graduationPlans: req.body.graduationPlans,
+							heardThrough: req.body.heardThrough
 						})
 						return user;
 					})
