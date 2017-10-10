@@ -20,6 +20,11 @@ module.exports = (app) => {
 	app.get('/verify', usersController.validateEmail );
 	
 	app.post('/login',  usersController.login);
+
+	app.post('/forgotpassword',  usersController.forgotPassword);
+
+	app.post('/resetpassword',  usersController.resetPassword);
+
 	app.get('/check-state', auth.IsAuthenticated, (req, res) => {
 		let content = {
 		success: true,

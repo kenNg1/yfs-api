@@ -31,8 +31,8 @@ module.exports = {
         
         mailOptions={
             to : email,
-            subject : "Please confirm your Email account",
-            html : "Hello,<br> Please Click on the link to verify your email.<br><a href="+url+">Click here to verify</a>" 
+            subject : "Young Founders School - Please confirm your Email account",
+            html : "Hello,<br> Please click on the link to verify your email.<br><a href="+url+">Click here to verify</a>" 
         }
         console.log(mailOptions);
         smtpTransport.sendMail(mailOptions, function(error, response){
@@ -43,25 +43,37 @@ module.exports = {
             }
         }); 
     },
-    check(req,res){
-        //code here
-        console.log(req.query.id);
-        res.status(200).send({message:"ok" });
-        // app.get('/verify',function(req,res){
-        //     console.log(req.query.id)
+    reset:(link,req,email) => {
+        /*
+        Here we are configuring our SMTP Server details.
+        STMP is mail server which is responsible for sending and recieving email.
+        */
+        var smtpTransport = nodemailer.createTransport({
+            service: "Gmail",
+            auth: {
+                user: "qwertuptest@gmail.com",
+                pass: "passwordpassword"
+            }
+        });
+        var mailOptions;
+        /*------------------SMTP Over-----------------------------*/
+
+
+        url="http://localhost:8000/passwordreset?id="+link;
         
-        //     if(req.query.id=="NzIhvgOeFo7FikYx")
-        //     {
-        //         console.log("email is verified");
-        //         res.end("<h1>Email has been Successfully verified");
-        //     }
-        //     else
-        //     {
-        //         console.log("email is not verified");
-        //         res.end("<h1>Bad Request</h1>");
-        //     }
-        
-        // });
+        mailOptions={
+            to : email,
+            subject : "Young Founders School - Forgot your password? No worries",
+            html : "Hello,<br> You recently requested to reset your password, so let’s get that sorted for you quickly.<br><a href="+url+">Click here to reset your password</a>" 
+        }
+        console.log(mailOptions);
+        smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+        }else{
+            console.log("Message sent: " + response.message);
+            }
+        }); 
     }
 }
 

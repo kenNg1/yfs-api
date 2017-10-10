@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
+		tier: {
+			type: DataTypes.STRING
+		},
 		link: {
 			type: DataTypes.STRING,
 			allowNull: false

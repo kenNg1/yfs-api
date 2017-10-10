@@ -102,6 +102,34 @@ module.exports = {
 			})
 			.catch(error => res.status(400).send(error));
 	},
+	forgotPassword(req,res,next){
+		return User
+		.find({
+			where: { email: req.body.email }
+		}).then(user =>{
+			if(!user){
+				return res.status(400).send({success: false, message: 'User not Found'});
+			}
+			emailValidator.reset(user.link,req,user.email)
+			return res.status(200).send(user.tier);
+		})
+	},
+	resetPassword(req,res,next){
+		return User
+		.find({
+			where: { link: req.query.id }
+		}).then(user =>{
+			if(!user){
+				return res.status(400).send({success: false, message: 'Reset link invalid'});
+			}
+			const link = emailValidator.createLink()
+			
+			user
+			.update({ password: req.body.password,link: link}).then(()=>{
+				return res.status(200).send({success: true, message: 'Password successfully reset'});
+			})			
+		})
+	},
 	validateEmail(req, res, next) {
 		return User
 			.find({
@@ -109,13 +137,9 @@ module.exports = {
 				})
 			.then(user => {
 				if (!user) {
-					return res.status(400).send({success: false, message: 'Email validation invalid'});
+					return res.status(400).send({success: false, message: 'Email validation link invalid, you must already have been verified. Try logging in again'});
 				} 
-				
-				if (user.validEmail == true) {
-					return res.status(400).send({success: false, message: 'User already validated'});		
-				} 
-				
+								
 				const now = Date.now();
 				if (now>user.link_expiry){
 					return res.status(400).send({success: false, message: 'Link expired'});					
@@ -126,8 +150,10 @@ module.exports = {
 					username: user.username,
 					email: user.email
 				}
+				const link = emailValidator.createLink()
+				
 				user
-				.update({ validEmail: true}).then(()=>{
+				.update({ validEmail: true, link: link}).then(()=>{
 					return res.status(200).send(data);
 				})
 
