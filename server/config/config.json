@@ -1,0 +1,27 @@
+{
+  "development": {
+    "username": "qwertup",
+    "password": "buffered07",
+    "database": "yfs_api_dev",
+    "host": "pg",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "qwertup",
+    "password": "buffered07",
+    "database": "yfs_api_test",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "qwertup",
+    "password": "buffered07",
+    "database": "yfs_api",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  }
+}
+

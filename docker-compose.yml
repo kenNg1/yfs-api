@@ -1,0 +1,72 @@
+version: '2'
+services:
+  nginx:
+      build: ./nginx
+      links:
+          - node1:node1
+          - node2:node2
+          - node3:node3
+      ports:
+          - "80:80"
+          
+  node1:
+    build: .
+    command: npm start
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "8000"
+    depends_on:
+      - pg
+    environment:
+                  # postgres://username:password@host:port/database
+                  # the above can be found in the config.json
+      DATABASE_URL: "postgres://qwertup:buffered07@pg:5432/node_api_dev"
+
+  node2:
+    build: .
+    command: npm start
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "8000"
+    depends_on:
+      - pg
+    environment:
+                  # postgres://username:password@host:port/database
+                  # the above can be found in the config.json
+      DATABASE_URL: "postgres://qwertup:buffered07@pg:5432/node_api_dev"
+
+  node3:
+    build: .
+    command: npm start
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "8000"
+    depends_on:
+      - pg
+    environment:
+                  # postgres://username:password@host:port/database
+                  # the above can be found in the config.json
+      DATABASE_URL: "postgres://qwertup:buffered07@pg:5432/node_api_dev"
+
+  pg:
+    # the below credentials will be created on the build
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: "qwertup"
+      POSTGRES_PASSWORD: "buffered07"
+      POSTGRES_DB: "node_api_dev"
+
+# IMPORTANT change host to "pg" in config.json
+# run docker-compose build OR docker-compose up
+# run docker-compose run
+# run docker ps -a
+# run docker exec -it <container name> bash for postgres
+# run docker exec -it <container name> sh for node
+# when in node bash run sequelize db:migrate , sequelize db:seed
+# sequelize db:seed --seed <seed file name> for a specific seed
