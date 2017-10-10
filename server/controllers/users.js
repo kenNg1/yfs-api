@@ -72,16 +72,13 @@ module.exports = {
 
 			req.login(user, (err) => {
 				if (err) return next(err);
-
 				console.log("now check email",user.dataValues);
-
 
 				const token = jwt.sign({ user: user.id }, config.secret, {expiresIn: 24 * 60 * 60});
 				return res.status(200).send({
 					token 	: token,
 					id	: user.id,
-					email	: user.email,
-					username: user.username
+					email	: user.email
 				});
 			});
 		})(req, res, next);
