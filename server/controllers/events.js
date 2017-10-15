@@ -1,5 +1,7 @@
 const Event = require('../models').Event;
 const User = require('../models').User;
+const Country = require('../models').Country;
+const City = require('../models').City;
 const Detail = require('../models').Detail;
 const District = require('../models').District;
 const Sport = require('../models').Sport;
@@ -11,25 +13,26 @@ module.exports = {
 			.create({
 				// post_type	: (!req.body.post_type ? 'post' : req.body.post_type),
 				name: req.body.name,
-				description: req.body.description,
-				level: req.body.level,
-				intensity: req.body.intensity,
-				terrain: req.body.terrain,
-				min_ppl: req.body.min_ppl,
-				max_ppl: req.body.max_ppl,
-				price: req.body.price,
-				sportswear: req.body.sportswear,
-				gear: req.body.gear,
-				org_description: req.body.org_description,
-				org_website: req.body.org_website,
-				imageUpload: req.body.imageUpload,
-				videoUpload: req.body.videoUpload,
+				image: req.body.image,    
+				location: req.body.location,    
+				shortInfo: req.body.shortInfo,
 				date: req.body.date,
 				time: req.body.time,
-				address: req.body.address,
-				district_id		: req.body.district_id || req.decoded.user,
-				sport_id		: req.body.sport_id || req.decoded.user,
-				user_id		: req.body.user_id || req.decoded.user
+				price: req.body.price,
+				city: req.body.city,
+				type: req.body.type,
+				deadline: req.body.deadline,
+				students: req.body.students,
+				studentsMax: req.body.studentsMax,
+				fixedMentors: req.body.fixedMentors,
+				fixedMentorsMax: req.body.fixedMentorsMax,
+				floatingMentors: req.body.floatingMentors,
+				floatingMentorsMax: req.body.floatingMentorsMax,
+				notice: req.body.notice,
+				longInfo: req.body.longInfo,
+				cityId	: req.body.cityId,
+				countryId: req.body.countryId,
+				status: req.body.status,
 			})
 			.then(event => res.status(200).send(event))
 			.catch(error => res.status(400).send(error));
@@ -40,9 +43,9 @@ module.exports = {
 			.findById(req.body.id, {
 				include: [
 					{
-					 model: User,
+					 model: City,
 					 include: [
-						{model: Detail}
+						{model: Country}
 					 ]  
 					}
 				]
@@ -130,25 +133,23 @@ module.exports = {
 
 	index(req, res){
 		return Event
-			.findAll({include: [
-				{model: District},
-				{model:User, attributes: ['id'], include: [{model: Detail}]},
-				// {model:User, include: [{model: Detail}]},
-			]})
+			.findAll(
+				{include: [
+					{model:Country},
+					{model:City},
+				]}
+			)
 			.then(event => res.status(200).send(event) )
 			.catch( error => res.status(400).send(error) );
 	},
 
 	show(req, res){
+		console.log(req.params)
 		return Event
 			.findById(req.params.eventId, {
 				include: [
-					{
-					 model: User,
-					 include: [
-						{model: Detail}
-					 ]  
-					}
+					{model:Country},
+					{model:City},
 				]
 			})
 			.then(

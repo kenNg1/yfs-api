@@ -1,0 +1,1 @@
+#keep all table names lower case & PLURAL here

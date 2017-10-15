@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/general');
 
 module.exports = (sequelize, DataTypes) => {
-	const User = sequelize.define('user', {
+	const User = sequelize.define('User', {
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -42,24 +42,19 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		sign_in_count: {
 			type: DataTypes.INTEGER,
-			// allowNull: false,			
 			defaultValue: 0
 		},
 		current_sign_in_at: {
 			type: DataTypes.DATE,
-			// allowNull: false		
 		},
 		last_sign_in_at: {
 			type: DataTypes.DATE,
-			// allowNull: false		
 		},
 		current_sign_in_ip: {
 			type: DataTypes.STRING,
-			// allowNull: false		
 		},
 		last_sign_in_ip: {
 			type: DataTypes.STRING,
-			// allowNull: false		
 		}
 	}, {
 		// schema: 'admin',
@@ -72,8 +67,8 @@ module.exports = (sequelize, DataTypes) => {
 				});
 			},
 			associate: (models) => {
-				// User.hasMany(models.Event, { foreignKey: 'user_id'});
-				// User.hasOne(models.Detail, { foreignKey: 'user_id'});
+				// user.hasMany(models.Event, { foreignKey: 'user_id'});
+				User.hasOne(models.Student, { foreignKey: 'user_id'});
 			}
 		}
 	});
@@ -84,8 +79,8 @@ module.exports = (sequelize, DataTypes) => {
 			const tmppass = user.password + config.secret;
 			bcrypt.hash(tmppass, salt, (err, hash) => {
 				if (err) return done(err);
-				user.salt 		= salt;
-				user.password 	= hash;
+				User.salt 		= salt;
+				User.password 	= hash;
 				return done(null, user);
 			});
 		});
@@ -97,8 +92,8 @@ module.exports = (sequelize, DataTypes) => {
 			const tmppass = user.password + config.secret;
 			bcrypt.hash(tmppass, salt, (err, hash) => {
 				if (err) return done(err);
-				user.salt 		= salt;
-				user.password 	= hash;
+				User.salt 		= salt;
+				User.password 	= hash;
 				return done(null, user);
 			});
 		});

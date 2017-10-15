@@ -1,5 +1,6 @@
-const User 		= require('../models').user;
-const Student 	= require('../models').student;
+const User 		= require('../models').User;
+const Student 	= require('../models').Student;
+const Country 	= require('../models').Country;
 const passport 	= require('passport');
 const jwt 		= require('jsonwebtoken');
 const config	= require('../config/general');
@@ -7,6 +8,7 @@ const emailValidator = require('../config/emailValidator');
 
 module.exports = {
 	create(req, res){
+		console.log(User.find({where: { email:req.body.email}}))
 		return User
 			.find({
 				where: { email: req.body.email }
@@ -28,10 +30,10 @@ module.exports = {
 						console.log(link);
 						if(req.body.tier === 'student')
 						Student.create({
-							user_id: user.id,
+							userId: user.id,
 							firstName: req.body.firstName,
 							lastName: req.body.lastName,
-							country: req.body.country,
+							countryId: req.body.countryId,
 							nickname: req.body.nickname,
 							image: 'https://cdn4.iconfinder.com/data/icons/follower/512/login-man-person-human-body-512.png',
 							schoolName: req.body.schoolName,
@@ -98,18 +100,28 @@ module.exports = {
 	// below api not really needed?
 	profile(req, res, next) {
 		return User
-			.findById(req.params.userId)
+			.findById(req.params.userId, {
+				include: [
+					{
+					 model: Student,
+					 include: [
+						{model: Country}
+					 ]  
+					}
+				]
+			})
+
 			.then(user => {
 				if (!user) {
 					return res.status(400).send({success: false, message: 'User not Found'});
 				}
 				
-				const data = {
-					id: user.id,
-					username: user.username,
-					email: user.email
-				}
-				return res.status(200).send(data);
+				// const data = {
+				// 	id: user.id,
+				// 	username: user.username,
+				// 	email: user.email
+				// }
+				return res.status(200).send({user});
 
 			})
 			.catch(error => res.status(400).send(error));
