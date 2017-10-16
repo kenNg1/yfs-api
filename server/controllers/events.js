@@ -40,16 +40,7 @@ module.exports = {
 
 	update(req, res){
 		return Event
-			.findById(req.body.id, {
-				include: [
-					{
-					 model: City,
-					 include: [
-						{model: Country}
-					 ]  
-					}
-				]
-			})
+			.findById(req.body.id)
 			.then(
 				event => {
 					console.log(event);
@@ -80,22 +71,6 @@ module.exports = {
 			)
 			.catch( error => res.status(404).send({ message: "Event Not Found![1]" }) );
 	},
-
-		// def index
-    // @events = Event.all
-    // if params[:name]
-    //   @sports = []
-    //   Sport.search(params[:name]).each do |sport|
-    //     @sports.push(sport.name)
-    //   end 
-    //   @events = Event.search(params[:name])
-    // else
-    //   @events = Event.all
-    // end
-    // render json: {:events=>@events.as_json(:include => [:district, {:user=>{
-    //                                                       :include => :detail}}, {:sport=> {:only => :name }}]),
-	// 			  :sports=>@sports.as_json()}
-	// end
 
 	queryIndex(req, res, next){
 		if(req.query['name']){
@@ -132,16 +107,29 @@ module.exports = {
 	},
 
 	index(req, res){
+		let limit = 9;
+		let offset = 0;
+		let page = req.params.page || 1;		
+		console.log(page)
 		return Event
-			.findAll(
-				{include: [
-					{model:Country},
-					{model:City},
-				]}
-			)
-			.then(event => res.status(200).send(event) )
+			.findAndCountAll().then(data => {
+				if(data.count/limit<page){
+					page = 1;
+				}
+				let pages = Math.ceil(data.count /limit);
+				offset = limit * (page -1);
+				Event.findAll(
+					{include: [
+						{model:Country},
+						{model:City},],
+					limit: limit,
+					offset: offset
+					}
+			).then(event => res.status(200).send(event) )
 			.catch( error => res.status(400).send(error) );
-	},
+	})
+	}
+	,
 
 	show(req, res){
 		console.log(req.params)

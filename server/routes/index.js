@@ -42,7 +42,7 @@ module.exports = (app) => {
 	app.post('/api/events/', eventsController.create); // new post route
 	app.put('/api/events/:eventId', eventsController.update); // update post route
 	app.delete('/api/events/:eventId', eventsController.destroy); // delete post route
-	app.get('/api/events/', eventsController.queryIndex, eventsController.index); // all post list route
+	app.get('/api/events/:page?', eventsController.queryIndex, eventsController.index); // all post list route
 	app.get('/api/events/:eventId', eventsController.show); // get post content by id route
 
 	// All details routes
