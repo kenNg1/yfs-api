@@ -1,8 +1,6 @@
 const usersController = require('../controllers').users;
 const eventsController = require('../controllers').events;
-const detailsController = require('../controllers').details;
 const sportsController = require('../controllers').sports;
-const districtsController = require('../controllers').districts;
 const auth = require('../config/auth');
 const emailValidator = require('../config/emailValidator');
 
@@ -45,14 +43,6 @@ module.exports = (app) => {
 	app.get('/api/events/:page?', eventsController.queryIndex, eventsController.index); // all post list route
 	app.get('/api/events/:eventId', eventsController.show); // get post content by id route
 
-	// All details routes
-	// fix the , auth.IsAuthenticated , bit
-	app.post('/api/details/', detailsController.create); // new post route
-	app.put('/api/details/:detailId', detailsController.update); // update post route
-	app.delete('/api/details/:detailId', detailsController.destroy); // delete post route
-	app.get('/api/details/', detailsController.index); // all post list route
-	app.get('/api/details/:detailId', detailsController.show); // get post content by id route
-
 	// All sports routes
 	// fix the , auth.IsAuthenticated , bit
 	app.post('/api/sports/', sportsController.create); // new post route
@@ -60,13 +50,5 @@ module.exports = (app) => {
 	app.delete('/api/sports/:sportId', sportsController.destroy); // delete post route
 	app.get('/api/sports/', sportsController.index); // all post list route
 	app.get('/api/sports/:sportId', sportsController.show); // get post content by id route
-
-	// All districts routes
-	// fix the , auth.IsAuthenticated , bit
-	app.post('/api/districts/', districtsController.create); // new post route
-	app.put('/api/districts/:districtId', districtsController.update); // update post route
-	app.delete('/api/districts/:districtId', districtsController.destroy); // delete post route
-	app.get('/api/districts/', districtsController.index); // all post list route
-	app.get('/api/districts/:districtId', districtsController.show); // get post content by id route
 
 };

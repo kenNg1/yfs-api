@@ -11,7 +11,6 @@ module.exports = {
 	create(req, res){
 		return Event
 			.create({
-				// post_type	: (!req.body.post_type ? 'post' : req.body.post_type),
 				name: req.body.name,
 				image: req.body.image,    
 				location: req.body.location,    
@@ -109,23 +108,39 @@ module.exports = {
 	index(req, res){
 		let limit = 9;
 		let offset = 0;
-		let page = req.params.page || 1;		
+		let type = req.params.type || null;
+		let location = req.params.location || null;
+		let page = req.params.page || 1;	
 		console.log(page)
 		return Event
 			.findAndCountAll().then(data => {
+				
 				if(data.count/limit<page){
 					page = 1;
 				}
 				let pages = Math.ceil(data.count /limit);
 				offset = limit * (page -1);
+				if(type != null && location != null ){
+					
+				} else if( type != null){
+
+				} else if( location != null){
+
+				}
+
 				Event.findAll(
 					{include: [
 						{model:Country},
 						{model:City},],
 					limit: limit,
-					offset: offset
-					}
-			).then(event => res.status(200).send(event) )
+					offset: offset,
+					// where: {
+					// 	type: type,
+					// 	location: {$ilike: '%' + req.params.location + '%'}
+					// }
+				})
+				
+			.then(event => res.status(200).send(event) )
 			.catch( error => res.status(400).send(error) );
 	})
 	}
