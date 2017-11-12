@@ -177,7 +177,6 @@ module.exports = {
 	,
 
 	show(req, res){
-		console.log(req.params)
 		EventStudent.findAll({
 			where: { eventId: req.params.eventId },
 			include: [{model:Student}]					
@@ -192,14 +191,9 @@ module.exports = {
 				})
 				.then(
 					event => {
-						// console.log("events!!",event);
-						// console.log("students!!",students);
-						// console.log("attrs",event.attributes);
-						// event.attributes.push('StudentsEnrolled');
-						// console.log("attrs-after",event.attributes);
+						// in order to show on the API response - add to dataValues property
 						event.dataValues.StudentsEnrolled = students;
-						console.log("DATAVALUES",event.dataValues)
-						// console.log("nestedEvent!",event);
+
 						if(!event) return res.status(404).send({ message: "Event Not Found!" });
 
 						return res.status(200).send(event);
