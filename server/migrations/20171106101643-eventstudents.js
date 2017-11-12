@@ -17,6 +17,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      accepted: {
+				type: Sequelize.BOOLEAN
+      },
       studentId: {
 				type      : Sequelize.INTEGER,
 				onDelete  : 'RESTRICT',

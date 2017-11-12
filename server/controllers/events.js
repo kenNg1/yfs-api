@@ -5,6 +5,8 @@ const City = require('../models').City;
 const Detail = require('../models').Detail;
 const District = require('../models').District;
 const Sport = require('../models').Sport;
+const Student = require('../models').Student;
+const EventStudent = require('../models').EventStudent;
 // const Comment = require('../models').Comment;
 
 module.exports = {
@@ -159,7 +161,9 @@ module.exports = {
 					Event.findAll(
 						{include: [
 							{model:Country},
-							{model:City},],
+							{model:City},
+							{model:Student, as:"StudentsEnrolled"},
+						],
 						limit: limit,
 						offset: offset,
 						order: '"deadline" ASC'						
@@ -174,20 +178,41 @@ module.exports = {
 
 	show(req, res){
 		console.log(req.params)
-		return Event
-			.findById(req.params.eventId, {
-				include: [
-					{model:Country},
-					{model:City},
-				]
-			})
-			.then(
-				event => {
-					if(!event) return res.status(404).send({ message: "Event Not Found!" });
+		EventStudent.findAll({
+			where: { eventId: req.params.eventId },
+			include: [{model:Student}]					
+		})
+		.then(students => {
+			return Event
+				.findById(req.params.eventId, {
+					include: [
+						{model:Country},
+						{model:City},				
+					]
+				})
+				.then(
+					event => {
+						// console.log("events!!",event);
+						// console.log("students!!",students);
+						// console.log("attrs",event.attributes);
+						// event.attributes.push('StudentsEnrolled');
+						// console.log("attrs-after",event.attributes);
+						event.dataValues.StudentsEnrolled = students;
+						console.log("DATAVALUES",event.dataValues)
+						// console.log("nestedEvent!",event);
+						if(!event) return res.status(404).send({ message: "Event Not Found!" });
 
-					return res.status(200).send(event);
-				}
-			)
-			.catch( error => res.status(404).send({ message: "Event Not Found!" }) );
+						return res.status(200).send(event);
+					}
+					
+				)
+				.catch( error => {
+					console.log(error);
+					res.status(404).send({ message: "Event Not Found 2!" });
+					}
+				);
+
+			} )
+			.catch( error => console.log(error) );
 	}
 };

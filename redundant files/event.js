@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         // belongs_to :user
         // belongs_to :sport
         // associations can be defined here
-        Event.belongsTo(models.User, { foreignKey: 'user_id', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+        Event.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
         Event.belongsTo(models.District, { foreignKey: 'district_id', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
         Event.belongsTo(models.Sport, { foreignKey: 'sport_id', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
       }

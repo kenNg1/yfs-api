@@ -124,6 +124,26 @@ module.exports = {
 			})
 			.catch(error => res.status(400).send(error));
 	},
+	profileUpdate(req, res, next) {
+		return Student
+			.findById(req.params.userId, {
+				include: [
+						{model: Country}
+				]
+			})
+			.then(
+				student => {
+					console.log(student);
+					console.log(req.body)
+					if(!student) return res.status(404).send({message: "Student Not Found![2]"});
+					return student
+						.update(req.body, { fields: Object.keys(req.body) })
+						.then( updateDetail => res.status(200).send(student) )
+						.catch( errorUpdate => res.status(400).send(errorUpdate) );
+				}
+			)
+			.catch( error => res.status(404).send(error) );
+	},
 	forgotPassword(req,res,next){
 		return User
 		.find({

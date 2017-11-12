@@ -34,6 +34,7 @@ module.exports = (app) => {
 	// is this necessary?? app.get('/signout', auth.IsAuthenticated, auth.destroySession);
 	// probs don't need profile api as we get the details another way... 
 	app.get('/api/profile/:userId', usersController.profile);
+	app.put('/api/profile/:userId', usersController.profileUpdate);
 
 	// All events routes
 	// fix the , auth.IsAuthenticated , bit
@@ -42,7 +43,7 @@ module.exports = (app) => {
 	app.delete('/api/events/:eventId', eventsController.destroy); // delete post route
 	// app.get('/api/events/:page?', eventsController.queryIndex, eventsController.index); // all post list route
 	app.get('/api/events/:page?', eventsController.index); // all post list route
-	app.get('/api/events/:eventId', eventsController.show); // get post content by id route
+	app.get('/api/event/:eventId', eventsController.show); // get post content by id route
 
 	// All sports routes
 	// fix the , auth.IsAuthenticated , bit

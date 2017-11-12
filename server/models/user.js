@@ -67,8 +67,7 @@ module.exports = (sequelize, DataTypes) => {
 				});
 			},
 			associate: (models) => {
-				// user.hasMany(models.Event, { foreignKey: 'user_id'});
-				User.hasOne(models.Student, { foreignKey: 'user_id'});
+				User.hasOne(models.Student, { foreignKey: 'userId'});
 			}
 		}
 	});
