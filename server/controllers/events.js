@@ -73,6 +73,7 @@ module.exports = {
 
 	queryIndex(req, res, next){
 		if(req.query['name']){
+			console.log('name!');
 			// code
 			return Event
 			.findAll({
@@ -108,8 +109,8 @@ module.exports = {
 	index(req, res){
 		let limit = 9;
 		let offset = 0;
-		let type = req.params.type || null;
-		let location = req.params.location || null;
+		let type = req.query.type || null;
+		let location = req.query.location || null;
 		let page = req.params.page || 1;	
 		console.log(page)
 		return Event
@@ -120,28 +121,53 @@ module.exports = {
 				}
 				let pages = Math.ceil(data.count /limit);
 				offset = limit * (page -1);
+				console.log("type:",type)
+				console.log("location:",location)
 				if(type != null && location != null ){
-					
+					console.log("type & location")
 				} else if( type != null){
-
+					Event.findAll(
+						{
+							where: {
+							type: {$ilike: '%' + req.query.type + '%'}
+							},
+							include: [
+							{model:Country},
+							{model:City},],
+						limit: limit,
+						offset: offset,
+						order: '"deadline" ASC'
+					})
+					.then(event => res.status(200).send(event) )
+					.catch( error => res.status(400).send(error) );					
 				} else if( location != null){
-
+					Event.findAll(
+						{
+							where: {
+							location: {$ilike: '%' + req.query.location + '%'}
+							},
+							include: [
+							{model:Country},
+							{model:City},],
+						limit: limit,
+						offset: offset,
+						order: '"deadline" ASC'
+					})
+					.then(event => res.status(200).send(event) )
+					.catch( error => res.status(400).send(error) );				
+				} else {
+					Event.findAll(
+						{include: [
+							{model:Country},
+							{model:City},],
+						limit: limit,
+						offset: offset,
+						order: '"deadline" ASC'						
+					})
+					
+				.then(event => res.status(200).send(event) )
+				.catch( error => res.status(400).send(error) );
 				}
-
-				Event.findAll(
-					{include: [
-						{model:Country},
-						{model:City},],
-					limit: limit,
-					offset: offset,
-					// where: {
-					// 	type: type,
-					// 	location: {$ilike: '%' + req.params.location + '%'}
-					// }
-				})
-				
-			.then(event => res.status(200).send(event) )
-			.catch( error => res.status(400).send(error) );
 	})
 	}
 	,

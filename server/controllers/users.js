@@ -8,7 +8,7 @@ const emailValidator = require('../config/emailValidator');
 
 module.exports = {
 	create(req, res){
-		console.log(User.find({where: { email:req.body.email}}))
+		// console.log(User.find({where: { email:req.body.email}}))
 		return User
 			.find({
 				where: { email: req.body.email }
@@ -25,6 +25,10 @@ module.exports = {
 						password: req.body.password,
 						link: link,
 						link_expiry: linkExpiry
+					})
+					.then(user => {
+						emailValidator.send(link,req,user.dataValues.email)
+						return user
 					})
 					.then(user => {
 						console.log(link);
@@ -50,12 +54,6 @@ module.exports = {
 						})
 						return user;
 					})
-					.then(user => {
-						emailValidator.send(link,req,user.dataValues.email)
-						return user
-					})
-						// module to validate email
-
 					.then(user => {
 						const token = jwt.sign({ user: user.id }, config.secret, {expiresIn: 24 * 60 * 60});
 						res.status(200).send({

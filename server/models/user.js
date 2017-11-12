@@ -78,9 +78,11 @@ module.exports = (sequelize, DataTypes) => {
 			if (err) return done(err);
 			const tmppass = user.password + config.secret;
 			bcrypt.hash(tmppass, salt, (err, hash) => {
+				console.log("salty",salt)			
+				console.log("hashy",hash)			
 				if (err) return done(err);
-				User.salt 		= salt;
-				User.password 	= hash;
+				user.salt 		= salt;
+				user.password 	= hash;
 				return done(null, user);
 			});
 		});
@@ -92,8 +94,8 @@ module.exports = (sequelize, DataTypes) => {
 			const tmppass = user.password + config.secret;
 			bcrypt.hash(tmppass, salt, (err, hash) => {
 				if (err) return done(err);
-				User.salt 		= salt;
-				User.password 	= hash;
+				user.salt 		= salt;
+				user.password 	= hash;
 				return done(null, user);
 			});
 		});
