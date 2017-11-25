@@ -1,5 +1,6 @@
 const User 		= require('../models').User;
 const Student 	= require('../models').Student;
+const Mentor 	= require('../models').Mentor;
 const Event 	= require('../models').Event;
 const EventStudent 	= require('../models').EventStudent;
 const Country 	= require('../models').Country;
@@ -29,32 +30,47 @@ module.exports = {
 						link_expiry: linkExpiry
 					})
 					.then(user => {
-						emailValidator.send(link,req,user.dataValues.email)
-						return user
+						console.log(link);
+						if(req.body.tier === 'student'){
+							Student.create({
+								userId: user.id,
+								firstName: req.body.firstName,
+								lastName: req.body.lastName,
+								countryId: req.body.countryId,
+								nickname: req.body.nickname,
+								image: 'https://cdn4.iconfinder.com/data/icons/follower/512/login-man-person-human-body-512.png',
+								schoolName: req.body.schoolName,
+								gender: req.body.gender,
+								dob: req.body.dob,
+								mobileNumber: req.body.mobileNumber,
+								googleSlides: req.body.googeSlides,
+								googleDocs: req.body.googeDocs,
+								microsoftOffice: req.body.microsoftOffice,
+								willGoUni: req.body.willGoUni,
+								desiredUniversity: req.body.desiredUniversity,
+								graduationPlans: req.body.graduationPlans,
+								heardThrough: req.body.heardThrough
+							})
+						} else if (req.body.tier === 'mentor'){
+							Mentor.create({
+								userId: user.id,
+								firstName: req.body.firstName,
+								lastName: req.body.lastName,
+								countryId: req.body.countryId,
+								cityId: req.body.cityId,
+								mobileNumber: req.body.mobileNumber,
+								companyName: req.body.companyName,
+								industry: req.body.industry,
+								title: req.body.title,
+								participation: req.body.participation,
+								about: req.body.about,
+							})
+						}
+						return user;
 					})
 					.then(user => {
-						console.log(link);
-						if(req.body.tier === 'student')
-						Student.create({
-							userId: user.id,
-							firstName: req.body.firstName,
-							lastName: req.body.lastName,
-							countryId: req.body.countryId,
-							nickname: req.body.nickname,
-							image: 'https://cdn4.iconfinder.com/data/icons/follower/512/login-man-person-human-body-512.png',
-							schoolName: req.body.schoolName,
-							gender: req.body.gender,
-							dob: req.body.dob,
-							mobileNumber: req.body.mobileNumber,
-							googleSlides: req.body.googeSlides,
-							googleDocs: req.body.googeDocs,
-							microsoftOffice: req.body.microsoftOffice,
-							willGoUni: req.body.willGoUni,
-							desiredUniversity: req.body.desiredUniversity,
-							graduationPlans: req.body.graduationPlans,
-							heardThrough: req.body.heardThrough
-						})
-						return user;
+						emailValidator.send(link,req,user.dataValues.email)
+						return user
 					})
 					.then(user => {
 						const token = jwt.sign({ user: user.id }, config.secret, {expiresIn: 24 * 60 * 60});
@@ -96,66 +112,6 @@ module.exports = {
 				});
 			});
 		})(req, res, next);
-	},
-	// below api not really needed?
-	profile(req, res, next) {
-		EventStudent.findAll({
-			where: { studentId: req.params.userId },
-			include: [{model:Event}]					
-		})
-		.then(events => {
-			return User
-				.findById(req.params.userId, {
-					include: [
-						{
-						model: Student,
-						include: [
-							{model: Country}
-						]  
-						}
-					]
-				})
-
-				.then(
-					user => {
-
-						user.dataValues.EventsEnrolled = events;
-					
-					if (!user) {
-						return res.status(400).send({success: false, message: 'User not Found'});
-					}
-					
-					// const data = {
-					// 	id: user.id,
-					// 	username: user.username,
-					// 	email: user.email
-					// }
-					return res.status(200).send({user});
-
-				})
-				.catch(error => res.status(400).send(error));
-			} )
-			.catch( error => console.log(error) );
-	},
-	profileUpdate(req, res, next) {
-		return Student
-			.findById(req.params.userId, {
-				include: [
-						{model: Country}
-				]
-			})
-			.then(
-				student => {
-					console.log(student);
-					console.log(req.body)
-					if(!student) return res.status(404).send({message: "Student Not Found![2]"});
-					return student
-						.update(req.body, { fields: Object.keys(req.body) })
-						.then( updateDetail => res.status(200).send(student) )
-						.catch( errorUpdate => res.status(400).send(errorUpdate) );
-				}
-			)
-			.catch( error => res.status(404).send(error) );
 	},
 	forgotPassword(req,res,next){
 		return User

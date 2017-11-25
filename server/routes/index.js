@@ -1,4 +1,5 @@
 const usersController = require('../controllers').users;
+const studentsController = require('../controllers').students;
 const eventsController = require('../controllers').events;
 const sportsController = require('../controllers').sports;
 const auth = require('../config/auth');
@@ -33,8 +34,8 @@ module.exports = (app) => {
 
 	// is this necessary?? app.get('/signout', auth.IsAuthenticated, auth.destroySession);
 	// probs don't need profile api as we get the details another way... 
-	app.get('/api/profile/:userId', usersController.profile);
-	app.put('/api/profile/:userId', usersController.profileUpdate);
+	app.get('/api/students/:userId', studentsController.profile);
+	app.put('/api/students/:userId', studentsController.profileUpdate);
 
 	// All events routes
 	// fix the , auth.IsAuthenticated , bit

@@ -1,0 +1,68 @@
+const User 		= require('../models').User;
+const Student 	= require('../models').Student;
+const Event 	= require('../models').Event;
+const EventStudent 	= require('../models').EventStudent;
+const Country 	= require('../models').Country;
+
+module.exports = {
+	// below api not really needed?
+	profile(req, res, next) {
+		EventStudent.findAll({
+			where: { studentId: req.params.userId },
+			include: [{model:Event}]					
+		})
+		.then(events => {
+			return User
+				.findById(req.params.userId, {
+					include: [
+						{
+						model: Student,
+						include: [
+							{model: Country}
+						]  
+						}
+					]
+				})
+
+				.then(
+					user => {
+
+						user.dataValues.EventsEnrolled = events;
+					
+					if (!user) {
+						return res.status(400).send({success: false, message: 'User not Found'});
+					}
+					
+					// const data = {
+					// 	id: user.id,
+					// 	username: user.username,
+					// 	email: user.email
+					// }
+					return res.status(200).send({user});
+
+				})
+				.catch(error => res.status(400).send(error));
+			} )
+			.catch( error => console.log(error) );
+	},
+	profileUpdate(req, res, next) {
+		return Student
+			.findById(req.params.userId, {
+				include: [
+						{model: Country}
+				]
+			})
+			.then(
+				student => {
+					console.log(student);
+					console.log(req.body)
+					if(!student) return res.status(404).send({message: "Student Not Found![2]"});
+					return student
+						.update(req.body, { fields: Object.keys(req.body) })
+						.then( updateDetail => res.status(200).send(student) )
+						.catch( errorUpdate => res.status(400).send(errorUpdate) );
+				}
+			)
+			.catch( error => res.status(404).send(error) );
+	},
+};

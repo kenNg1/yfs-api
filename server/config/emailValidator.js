@@ -26,13 +26,15 @@ module.exports = {
         var mailOptions;
         /*------------------SMTP Over-----------------------------*/
 
-
         url="http://localhost:8000/verify?id="+link;
         
         mailOptions={
             to : email,
             subject : "Young Founders School - Please confirm your Email account",
-            html : "Hello,<br> Please click on the link to verify your email.<br><a href="+url+">Click here to verify</a>" 
+            html : `Hello,
+            <br> Thank you for registering as a ${req.body.tier}.
+            <br> Please click on the link to verify your email.
+            <br><a href="${url}">Click here to verify</a>`
         }
         console.log(mailOptions);
         smtpTransport.sendMail(mailOptions, function(error, response){
