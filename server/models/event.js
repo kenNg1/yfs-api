@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Event = sequelize.define('Event', {
+  var Event = sequelize.define('event', {
     name: DataTypes.STRING,
     image: DataTypes.STRING,    
     location: DataTypes.STRING,    
@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.INTEGER,
     type: DataTypes.STRING,
     deadline: DataTypes.DATE,
-    students: DataTypes.INTEGER,
+    studentsIn: DataTypes.INTEGER,
     studentsMax: DataTypes.INTEGER,
-    fixedMentors: DataTypes.INTEGER,
+    fixedMentorsIn: DataTypes.INTEGER,
     fixedMentorsMax: DataTypes.INTEGER,
-    floatingMentors: DataTypes.INTEGER,
+    floatingMentorsIn: DataTypes.INTEGER,
     floatingMentorsMax: DataTypes.INTEGER,
     notice: DataTypes.TEXT,
     longInfo: DataTypes.TEXT,
@@ -22,17 +22,23 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: function(models) {
-        Event.belongsTo(models.Country, { foreignKey: 'countryId', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
-        Event.belongsTo(models.City, { foreignKey: 'cityId', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
-        Event.belongsToMany(models.Student, {
+        Event.belongsTo(models.country, { foreignKey: 'countryId', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+        Event.belongsTo(models.city, { foreignKey: 'cityId', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+        Event.belongsToMany(models.student, {
           // as:"StudentsEnrolled",
-          through:"EventStudents",
-          foreignKey: "eventId"
+          through:"events_students",
+          foreignKey:  {
+            name:"eventId",
+            field:'event_id'
+          }
         });
-        Event.belongsToMany(models.Mentor, {
+        Event.belongsToMany(models.mentor, {
           // as:"StudentsEnrolled",
-          through:"EventMentors",
-          foreignKey: "eventId"
+          through:"events_mentors",
+          foreignKey: {
+            name:"eventId",
+            field:'event_id'
+          }
         });
 
       

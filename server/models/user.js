@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/general');
 
 module.exports = (sequelize, DataTypes) => {
-	const User = sequelize.define('User', {
+	const User = sequelize.define('user', {
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
 				});
 			},
 			associate: (models) => {
-				User.hasOne(models.Student, { foreignKey: 'userId'});
+				User.hasOne(models.student, { foreignKey: 'userId'});
 			}
 		}
 	});

@@ -1,12 +1,12 @@
-const Event = require('../models').Event;
-const User = require('../models').User;
-const Country = require('../models').Country;
-const City = require('../models').City;
-const Detail = require('../models').Detail;
-const District = require('../models').District;
-const Sport = require('../models').Sport;
-const Student = require('../models').Student;
-const Mentor = require('../models').Mentor;
+const Event = require('../models').event;
+const User = require('../models').user;
+const Country = require('../models').country;
+const City = require('../models').city;
+const Detail = require('../models').detail;
+const District = require('../models').district;
+const Sport = require('../models').sport;
+const Student = require('../models').student;
+const Mentor = require('../models').mentor;
 // const EventStudent = require('../models').EventStudent;
 // const EventMentor = require('../models').EventMentor;
 // const Comment = require('../models').Comment;
@@ -186,6 +186,7 @@ module.exports = {
 		// .then(students => {
 			return Event
 				.findById(req.params.eventId, {
+					// includeAll:true
 					include: [
 						{model:Country},
 						{model:City},	

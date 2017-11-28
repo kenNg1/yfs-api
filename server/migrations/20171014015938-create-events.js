@@ -1,7 +1,7 @@
 'use strict';
 module.exports = { 
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Events', {
+    return queryInterface.createTable('events', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -61,7 +61,7 @@ module.exports = {
 					notEmpty: false
 				}
       },
-      students: {
+      studentsIn: {
         type: Sequelize.INTEGER,
 				validate: {
 					notEmpty: false
@@ -73,7 +73,7 @@ module.exports = {
 					notEmpty: false
 				}
       },
-      fixedMentors: {
+      fixedMentorsIn: {
         type: Sequelize.INTEGER,
 				validate: {
 					notEmpty: false
@@ -85,7 +85,7 @@ module.exports = {
 					notEmpty: false
 				}
       },
-      floatingMentors: {
+      floatingMentorsIn: {
         type: Sequelize.INTEGER,
 				validate: {
 					notEmpty: false
@@ -129,6 +129,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Events');
+    return queryInterface.dropTable('events');
   }
 };

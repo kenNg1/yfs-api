@@ -1,15 +1,21 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var EventStudent = sequelize.define('EventStudent', {
+  var EventStudent = sequelize.define('events_student', {
   }, {
     classMethods: {
       associate: function(models) {
-        // EventStudent.belongsTo(models.Event, {
-        //   foreignKey: 'eventId',
-        // });
-        // EventStudent.belongsTo(models.Student, {
-        //   foreignKey: 'studentId',
-        // });
+        EventStudent.belongsTo(models.event, {
+          foreignKey:{
+            name:'eventId',
+            field:'event_id'            
+          }
+        });
+        EventStudent.belongsTo(models.student, {
+          foreignKey:{
+            name:'studentId',
+            field:'student_id'
+          }
+        });
         // EventStudent.belongsTo(models.Event);
         // EventStudent.belongsTo(models.Student);
         // models.Event.belongsToMany(models.Student, {

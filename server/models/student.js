@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Student = sequelize.define('Student', {
+  var Student = sequelize.define('student', {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     nickname: DataTypes.STRING,
@@ -20,12 +20,21 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Student.belongsTo(models.User, { foreignKey: 'userId' , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
-        Student.belongsTo(models.Country, { foreignKey: 'countryId' , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
-        Student.belongsToMany(models.Event, {
+        Student.belongsTo(models.user, { foreignKey:{
+          name:'userId',
+          field:'user_id'
+         } , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+        Student.belongsTo(models.country, { foreignKey:{
+          name:'countryId',
+          field:'country_id'
+         } , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+        Student.belongsToMany(models.event, {
           // as:"CoursesEnrolled",
-          through:"EventStudents",
-          foreignKey: "studentId",
+          through:"events_students",
+          foreignKey:{
+            name:"studentId",
+            field:'student_id'
+          }
         });        
       }
     }

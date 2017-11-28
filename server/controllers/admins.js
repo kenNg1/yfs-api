@@ -1,4 +1,4 @@
-const Admin 		= require('../models').Admin;
+const Admin 		= require('../models').admin;
 const passport 	= require('passport');
 const jwt 		= require('jsonwebtoken');
 const config	= require('../config/general');

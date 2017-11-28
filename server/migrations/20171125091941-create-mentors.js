@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Mentors', {
+    return queryInterface.createTable('mentors', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -34,38 +34,38 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userId: {
+      user_id: {
 				type      : Sequelize.INTEGER,
 				onDelete  : 'RESTRICT',
 				onUpdate  : 'CASCADE',
 				references: {
-					model : 'Users',
+					model : 'users',
 					key   : 'id',
-					as	  : 'userId'
+					as	  : 'user_id'
 				}
       },
-      countryId: {
+      country_id: {
         type      : Sequelize.INTEGER,
         onDelete  : 'CASCADE',
         references: {
-          model : 'Countries',
+          model : 'countries',
           key   : 'id',
-          as	  : 'countryId'
+          as	  : 'country_id'
         }
       },
-      cityId: {
+      city_id: {
         type      : Sequelize.INTEGER,
         onDelete  : 'CASCADE',
         references: {
-          model : 'Cities',
+          model : 'cities',
           key   : 'id',
-          as	  : 'cityId'
+          as	  : 'city_id'
         }
       }
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Mentors');
+    return queryInterface.dropTable('mentors');
   }
 };

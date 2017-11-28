@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/general');
 
 module.exports = (sequelize, DataTypes) => {
-	const Admin = sequelize.define('Admin', {
+	const Admin = sequelize.define('admin', {
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,

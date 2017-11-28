@@ -1,13 +1,13 @@
-const Student 	= require('../models').Student;
-const Event 	= require('../models').Event;
-const EventStudent 	= require('../models').EventStudent;
-const Country 	= require('../models').Country;
+const Student 	= require('../models').student;
+const Event 	= require('../models').event;
+const EventStudent 	= require('../models').events_student;
+const Country 	= require('../models').country;
 
 module.exports = {
 	// below api not really needed?
 	profile(req, res, next) {
 		EventStudent.findAll({
-			where: { studentId: req.params.studentId },
+			where: { student_id: req.params.studentId },
 			include: [{model:Event}]					
 		})
 		.then(events => {

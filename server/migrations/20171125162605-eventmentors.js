@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('EventMentors', {
+    return queryInterface.createTable('events_mentors', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -32,29 +32,29 @@ module.exports = {
       timeSlots: {
         type: Sequelize.ARRAY(Sequelize.STRING),
       },
-      mentorId: {
+      mentor_id: {
 				type      : Sequelize.INTEGER,
 				onDelete  : 'RESTRICT',
 				onUpdate  : 'CASCADE',
 				references: {
-					model : 'Mentors',
+					model : 'mentors',
 					key   : 'id',
-					as	  : 'mentorId'
+					as	  : 'mentor_id'
 				}
 			},
-      eventId: {
+      event_id: {
 				type      : Sequelize.INTEGER,
 				onDelete  : 'RESTRICT',
 				onUpdate  : 'CASCADE',
 				references: {
-					model : 'Events',
+					model : 'events',
 					key   : 'id',
-					as	  : 'eventId'
+					as	  : 'event_id'
 				}
 			}
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('EventMentors');
+    return queryInterface.dropTable('events_mentors');
   }
 };

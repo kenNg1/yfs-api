@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Students', {
+    return queryInterface.createTable('students', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -39,19 +39,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userId: {
+      user_id: {
 				type      : Sequelize.INTEGER,
 				onDelete  : 'RESTRICT',
 				onUpdate  : 'CASCADE',
 				references: {
-					model : 'Users',
+					model : 'users',
 					key   : 'id',
-					as	  : 'userId'
+					as	  : 'user_id'
 				}
 			}
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Students');
+    return queryInterface.dropTable('students');
   }
 };

@@ -1,8 +1,8 @@
-const Mentor 	= require('../models').Mentor;
-const Event 	= require('../models').Event;
-const EventMentor 	= require('../models').EventMentor;
-const Country 	= require('../models').Country;
-const City 	= require('../models').City;
+const Mentor 	= require('../models').mentor;
+const Event 	= require('../models').event;
+const EventMentor 	= require('../models').events_mentor;
+const Country 	= require('../models').country;
+const City 	= require('../models').city;
 
 module.exports = {
 	// below api not really needed?

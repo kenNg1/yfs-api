@@ -4,28 +4,28 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return [
       queryInterface.addColumn(
-        'Events',
-        'cityId',
+        'events',
+        'city_id',
         {
           type      : Sequelize.INTEGER,
           onDelete  : 'CASCADE',
           references: {
-            model : 'Cities',
+            model : 'cities',
             key   : 'id',
-            as	  : 'cityId'
+            as	  : 'city_id'
           }
         }
       ),
       queryInterface.addColumn(
-        'Cities',
-        'countryId',
+        'cities',
+        'country_id',
         {
           type      : Sequelize.INTEGER,
           onDelete  : 'CASCADE',
           references: {
-            model : 'Countries',
+            model : 'countries',
             key   : 'id',
-            as	  : 'countryId'
+            as	  : 'country_id'
           }
         }
       )
@@ -35,26 +35,26 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return [
       queryInterface.removeColumn(
-        'Events',
-        'cityId',
+        'events',
+        'city_id',
         {
           type      : Sequelize.INTEGER,
           onDelete  : 'CASCADE',
           references: {
-            model : 'Cities',
+            model : 'cities',
             key   : 'id',
             as	  : 'cityId'
           }
         }
       ),
       queryInterface.removeColumn(
-        'Cities',
-        'countryId',
+        'cities',
+        'country_id',
         {
           type      : Sequelize.INTEGER,
           onDelete  : 'CASCADE',
           references: {
-            model : 'Countries',
+            model : 'countries',
             key   : 'id',
             as	  : 'countryId'
           }

@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-      return queryInterface.bulkInsert('Countries', [
+      return queryInterface.bulkInsert('countries', [
         {name: "Hong Kong"},
         {name: "China"},
         ],{})
@@ -16,6 +16,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('Person', null, {});
     */
-    return queryInterface.bulkDelete('Countries', null, {});
+    return queryInterface.bulkDelete('countries', null, {});
   }
 };

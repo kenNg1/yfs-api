@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('EventStudents', {
+    return queryInterface.createTable('events_students', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,29 +20,29 @@ module.exports = {
       accepted: {
 				type: Sequelize.BOOLEAN
       },
-      studentId: {
+      student_id: {
 				type      : Sequelize.INTEGER,
 				onDelete  : 'RESTRICT',
 				onUpdate  : 'CASCADE',
 				references: {
-					model : 'Students',
+					model : 'students',
 					key   : 'id',
-					as	  : 'studentId'
+					as	  : 'student_id'
 				}
 			},
-      eventId: {
+      event_id: {
 				type      : Sequelize.INTEGER,
 				onDelete  : 'RESTRICT',
 				onUpdate  : 'CASCADE',
 				references: {
-					model : 'Events',
+					model : 'events',
 					key   : 'id',
-					as	  : 'eventId'
+					as	  : 'event_id'
 				}
 			}
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('EventStudents');
+    return queryInterface.dropTable('events_students');
   }
 };
