@@ -10,7 +10,6 @@ module.exports = (passport) => {
 
 	// Deserializing user session
 	passport.deserializeUser((user, done) => {
-		
 		User.find({where: {id: user.id}})
 			.success((user) => {
 				done(null, user);

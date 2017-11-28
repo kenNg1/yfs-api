@@ -1,5 +1,7 @@
 const usersController = require('../controllers').users;
+const adminsController = require('../controllers').admins;
 const studentsController = require('../controllers').students;
+const mentorsController = require('../controllers').mentors;
 const eventsController = require('../controllers').events;
 const sportsController = require('../controllers').sports;
 const auth = require('../config/auth');
@@ -17,12 +19,17 @@ module.exports = (app) => {
 	// user route (auth.IsAuthenticated) for checking the token
 	app.post('/register', usersController.create);
 	app.get('/verify', usersController.validateEmail );
-	
 	app.post('/login',  usersController.login);
-
 	app.post('/forgotpassword',  usersController.forgotPassword);
-
 	app.post('/resetpassword',  usersController.resetPassword);
+	
+	app.post('/admin/register', adminsController.create);
+	app.get('/admin/verify', adminsController.validateEmail );
+	app.post('/admin/login',  adminsController.login);
+	app.post('/admin/forgotpassword',  adminsController.forgotPassword);
+	app.post('/admin/resetpassword',  adminsController.resetPassword);
+	// auth is authenticated
+	app.get('/admin/events/:type', eventsController.indexType); // all post list route
 
 	app.get('/check-state', auth.IsAuthenticated, (req, res) => {
 		let content = {
@@ -34,8 +41,11 @@ module.exports = (app) => {
 
 	// is this necessary?? app.get('/signout', auth.IsAuthenticated, auth.destroySession);
 	// probs don't need profile api as we get the details another way... 
-	app.get('/api/students/:userId', studentsController.profile);
-	app.put('/api/students/:userId', studentsController.profileUpdate);
+	app.get('/api/students/:studentId', studentsController.profile);
+	app.put('/api/students/:studentId', studentsController.profileUpdate);
+
+	app.get('/api/mentors/:mentorId', mentorsController.profile);
+	app.put('/api/mentors/:mentorId', mentorsController.profileUpdate);
 
 	// All events routes
 	// fix the , auth.IsAuthenticated , bit

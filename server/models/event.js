@@ -24,11 +24,18 @@ module.exports = (sequelize, DataTypes) => {
       associate: function(models) {
         Event.belongsTo(models.Country, { foreignKey: 'countryId', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
         Event.belongsTo(models.City, { foreignKey: 'cityId', onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
-      //   Event.belongsToMany(models.Student, {
-      //     as:"StudentsEnrolled",
-      //     through:"EventStudent",
-      //     foreignKey: 'studentId'
-      // });
+        Event.belongsToMany(models.Student, {
+          // as:"StudentsEnrolled",
+          through:"EventStudents",
+          foreignKey: "eventId"
+        });
+        Event.belongsToMany(models.Mentor, {
+          // as:"StudentsEnrolled",
+          through:"EventMentors",
+          foreignKey: "eventId"
+        });
+
+      
       }
     }
   });

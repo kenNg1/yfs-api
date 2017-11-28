@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     participation: DataTypes.STRING,
     about: DataTypes.TEXT,
+    
   }, {
     classMethods: {
       associate: function(models) {
@@ -16,6 +17,12 @@ module.exports = (sequelize, DataTypes) => {
         Mentor.belongsTo(models.User, { foreignKey: 'userId' , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
         Mentor.belongsTo(models.Country, { foreignKey: 'countryId' , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
         Mentor.belongsTo(models.City, { foreignKey: 'cityId' , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+        Mentor.belongsToMany(models.Event, {
+          // as:"CoursesEnrolled",
+          through:"EventMentors",
+          foreignKey: "mentorId",
+          
+        });       
       }
     }
   });

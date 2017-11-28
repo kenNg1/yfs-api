@@ -6,7 +6,9 @@ const Detail = require('../models').Detail;
 const District = require('../models').District;
 const Sport = require('../models').Sport;
 const Student = require('../models').Student;
-const EventStudent = require('../models').EventStudent;
+const Mentor = require('../models').Mentor;
+// const EventStudent = require('../models').EventStudent;
+// const EventMentor = require('../models').EventMentor;
 // const Comment = require('../models').Comment;
 
 module.exports = {
@@ -162,7 +164,7 @@ module.exports = {
 						{include: [
 							{model:Country},
 							{model:City},
-							{model:Student, as:"StudentsEnrolled"},
+							{model:Student},
 						],
 						limit: limit,
 						offset: offset,
@@ -177,22 +179,24 @@ module.exports = {
 	,
 
 	show(req, res){
-		EventStudent.findAll({
-			where: { eventId: req.params.eventId },
-			include: [{model:Student}]					
-		})
-		.then(students => {
+		// EventStudent.findAll({
+		// 	where: { eventId: req.params.eventId },
+		// 	include: [{model:Student}]					
+		// })
+		// .then(students => {
 			return Event
 				.findById(req.params.eventId, {
 					include: [
 						{model:Country},
-						{model:City},				
+						{model:City},	
+						{model:Student},			
+						{model:Mentor}
 					]
 				})
 				.then(
 					event => {
 						// in order to show on the API response - add to dataValues property
-						event.dataValues.StudentsEnrolled = students;
+						// event.dataValues.StudentsEnrolled = students;
 
 						if(!event) return res.status(404).send({ message: "Event Not Found!" });
 
@@ -206,7 +210,27 @@ module.exports = {
 					}
 				);
 
-			} )
-			.catch( error => console.log(error) );
-	}
+			// } )
+			// .catch( error => console.log(error) );
+	},
+
+	indexType(req, res){
+		Event.findAll({
+			where: { type: req.params.type },
+			include: [
+				{model:Student},
+				{model:Mentor},
+			]
+		})
+		.then(
+			event => {
+
+				if(!event) return res.status(404).send({ message: "Event Not Found!" });
+
+				return res.status(200).send(event);
+			}
+		)
+		.catch( error => console.log(error) );
+	},
+	
 };

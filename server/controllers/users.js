@@ -17,17 +17,25 @@ module.exports = {
 				where: { email: req.body.email }
 			})
 			.then(user => {
+				if (req.body.tier === "admin" && req.body.setUpPass != "buffered07") {
+					return res.status(400).send({message: 'Incorrect admin setup password'});
+				};
+				if (req.body.tier === "superadmin" && req.body.setUpPass != "buffered07") {
+					return res.status(400).send({message: 'Incorrect super admin setup password'});
+				};
 				if (!user) {
+
 					const link = emailValidator.createLink()
 					let linkExpiry = new Date()
 					linkExpiry.setDate(linkExpiry.getDate() + 1);
-					
+
 					User.create({
 						email 	: req.body.email,
 						username: req.body.username,
 						password: req.body.password,
 						link: link,
-						link_expiry: linkExpiry
+						link_expiry: linkExpiry,
+						tier: req.body.tier
 					})
 					.then(user => {
 						console.log(link);

@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
         Student.belongsTo(models.User, { foreignKey: 'userId' , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
         Student.belongsTo(models.Country, { foreignKey: 'countryId' , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
-        // Student.belongsToMany(models.Event, {
-        //   as:"CoursesEnrolled",
-        //   through:"EventStudent",
-        //   foreignKey: 'eventId'
-        // });        
+        Student.belongsToMany(models.Event, {
+          // as:"CoursesEnrolled",
+          through:"EventStudents",
+          foreignKey: "studentId",
+        });        
       }
     }
   });
