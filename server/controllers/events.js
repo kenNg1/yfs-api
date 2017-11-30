@@ -7,8 +7,8 @@ const District = require('../models').district;
 const Sport = require('../models').sport;
 const Student = require('../models').student;
 const Mentor = require('../models').mentor;
-// const EventStudent = require('../models').EventStudent;
-// const EventMentor = require('../models').EventMentor;
+const EventStudent = require('../models').event_student;
+const EventMentor = require('../models').event_mentor;
 // const Comment = require('../models').Comment;
 
 module.exports = {
@@ -190,8 +190,13 @@ module.exports = {
 					include: [
 						{model:Country},
 						{model:City},	
-						{model:Student},			
-						{model:Mentor}
+						{model:Student},
+						{model:Mentor},			
+						// {model:Mentor, include: [
+						// 	{model: EventMentor, attributes: ['role']}
+						// ]},
+						// { all: true, nested: true }
+						// { all: true }
 					]
 				})
 				.then(

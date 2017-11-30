@@ -28,14 +28,16 @@ module.exports = (sequelize, DataTypes) => {
           name:'countryId',
           field:'country_id'
          } , onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+
         Student.belongsToMany(models.event, {
           // as:"CoursesEnrolled",
-          through:"events_students",
+          through:models.event_student,
           foreignKey:{
             name:"studentId",
             field:'student_id'
           }
-        });        
+        });
+        
       }
     }
   });

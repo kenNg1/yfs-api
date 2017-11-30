@@ -1,6 +1,6 @@
 const Student 	= require('../models').student;
 const Event 	= require('../models').event;
-const EventStudent 	= require('../models').events_student;
+const EventStudent 	= require('../models').event_student;
 const Country 	= require('../models').country;
 
 module.exports = {

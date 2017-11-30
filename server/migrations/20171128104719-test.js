@@ -11,7 +11,7 @@ module.exports = {
     */
     return [
       queryInterface.addColumn(
-        'events_mentors',
+        'event_mentors',
         'test',
         {
           type      : Sequelize.INTEGER
@@ -30,7 +30,7 @@ module.exports = {
     */
     return [
       queryInterface.removeColumn(
-        'events_mentors',
+        'event_mentors',
         'test',
         {
           type      : Sequelize.INTEGER

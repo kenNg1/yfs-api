@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('events_mentors', {
+    return queryInterface.createTable('event_mentors', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -55,6 +55,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('events_mentors');
+    return queryInterface.dropTable('event_mentors');
   }
 };

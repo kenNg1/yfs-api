@@ -26,14 +26,16 @@ module.exports = (sequelize, DataTypes) => {
           name:'cityId',
           field:'city_id'
         }, onDelete: 'RESTRICT', onUpdate: 'CASCADE' });
+
         Mentor.belongsToMany(models.event, {
           // as:"CoursesEnrolled",
-          through:"events_mentors",
+          through:models.event_mentor,
           foreignKey:{
             name:"mentorId",
             field:'mentor_id'
           }
-        });       
+        });      
+         
       }
     }
   });

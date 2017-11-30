@@ -1,6 +1,6 @@
 const Mentor 	= require('../models').mentor;
 const Event 	= require('../models').event;
-const EventMentor 	= require('../models').events_mentor;
+const EventMentor 	= require('../models').event_mentor;
 const Country 	= require('../models').country;
 const City 	= require('../models').city;
 
