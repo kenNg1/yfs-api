@@ -4,7 +4,6 @@ const Country = require('../models').country;
 const City = require('../models').city;
 const Detail = require('../models').detail;
 const District = require('../models').district;
-const Sport = require('../models').sport;
 const Student = require('../models').student;
 const Mentor = require('../models').mentor;
 const EventStudent = require('../models').event_student;

@@ -1,5 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models').user;
+const Admin = require('../models').admin;
 
 module.exports = (passport) => {
 	// Serializing user session
@@ -33,9 +34,21 @@ module.exports = (passport) => {
 							return done(null, user);
 						});
 					}
-					else {
-						return done(null, false, {message: 'Incorrect Username'});
-					}
+					Admin.findOne({where:{email:username}})
+						.then((admin)=>{
+							if(admin){
+								passwd = admin ? admin.password : '';
+								Admin.validPassword(password, passwd, (err, isMatch) => {
+									if (err) return done(err);
+									if (!isMatch) return done(null, false, {message: 'Incorrect Password'});
+									return done(null, admin);
+								});
+						 } else {
+							return done(null, false, {message: 'Incorrect Username'});
+						}})		
+						.catch((err) => {
+							return done(null, false, {message: 'Incorrect Username'})
+						});			
 				})
 				.catch((err) => {
 					return done(null, false, {message: 'Incorrect Username'})

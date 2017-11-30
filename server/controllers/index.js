@@ -3,7 +3,7 @@ const admins = require('./admins');
 const students = require('./students');
 const mentors = require('./mentors');
 const events = require('./events');
-const sports = require('./sports');
+const images = require('./images');
 
 module.exports = {
 	users,
@@ -11,5 +11,5 @@ module.exports = {
 	students,
 	mentors,
 	events,
-	sports,
+	images,
 };

@@ -3,7 +3,7 @@ const adminsController = require('../controllers').admins;
 const studentsController = require('../controllers').students;
 const mentorsController = require('../controllers').mentors;
 const eventsController = require('../controllers').events;
-const sportsController = require('../controllers').sports;
+const imagesController = require('../controllers').images;
 const auth = require('../config/auth');
 const emailValidator = require('../config/emailValidator');
 
@@ -30,6 +30,10 @@ module.exports = (app) => {
 	app.post('/admin/resetpassword',  adminsController.resetPassword);
 	// auth is authenticated
 	app.get('/admin/events/:type', eventsController.indexType); // all post list route
+	app.put('/admin/mentors/:mentorId/:eventId', mentorsController.eventMentorUpdate); // all post list route
+	app.put('/admin/students/:studentId/:eventId', studentsController.eventStudentUpdate); // all post list route
+	app.get('/api/students/:page?', studentsController.index);
+	
 
 	app.get('/check-state', auth.IsAuthenticated, (req, res) => {
 		let content = {
@@ -56,12 +60,12 @@ module.exports = (app) => {
 	app.get('/api/events/:page?', eventsController.index); // all post list route
 	app.get('/api/event/:eventId', eventsController.show); // get post content by id route
 
-	// All sports routes
+	// All images routes
 	// fix the , auth.IsAuthenticated , bit
-	app.post('/api/sports/', sportsController.create); // new post route
-	app.put('/api/sports/:sportId', sportsController.update); // update post route
-	app.delete('/api/sports/:sportId', sportsController.destroy); // delete post route
-	app.get('/api/sports/', sportsController.index); // all post list route
-	app.get('/api/sports/:sportId', sportsController.show); // get post content by id route
+	app.post('/api/images/', imagesController.create); // new post route
+	app.put('/api/images/:imageId', imagesController.update); // update post route
+	app.delete('/api/images/:imageId', imagesController.destroy); // delete post route
+	app.get('/api/images/', imagesController.index); // all post list route
+	app.get('/api/images/:imageId', imagesController.show); // get post content by id route
 
 };
