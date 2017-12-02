@@ -107,7 +107,7 @@ module.exports = {
 					Student.findAll(
 						{
 							where: {
-							type: {$ilike: '%' + req.query.gender + '%'}
+							gender: {$ilike: '%' + req.query.gender + '%'}
 							},
 							include: [
 							{model:Country},
@@ -122,7 +122,7 @@ module.exports = {
 					Student.findAll(
 						{
 							where: {
-							location: {$ilike: '%' + req.query.country + '%'}
+							country: {$ilike: '%' + req.query.country + '%'}
 							},
 							include: [
 							{model:Country},
@@ -137,7 +137,7 @@ module.exports = {
 					Student.findAll(
 						{
 							where: {
-							location: {$ilike: '%' + req.query.city + '%'}
+							city: {$ilike: '%' + req.query.city + '%'}
 							},
 							include: [
 							{model:Country},

@@ -25,6 +25,7 @@ module.exports = (passport) => {
 		(username, password, done) => {
 			User.findOne({where: {email: username} })
 				.then((user) => {
+					console.log("see me",user);
 					if (user) {
 						passwd = user ? user.password : '';
 						User.validPassword(password, passwd, (err, isMatch) => {
@@ -33,8 +34,8 @@ module.exports = (passport) => {
 
 							return done(null, user);
 						});
-					}
-					Admin.findOne({where:{email:username}})
+					} else {
+						Admin.findOne({where:{email:username}})
 						.then((admin)=>{
 							if(admin){
 								passwd = admin ? admin.password : '';
@@ -48,7 +49,8 @@ module.exports = (passport) => {
 						}})		
 						.catch((err) => {
 							return done(null, false, {message: 'Incorrect Username'})
-						});			
+						});	
+					}		
 				})
 				.catch((err) => {
 					return done(null, false, {message: 'Incorrect Username'})

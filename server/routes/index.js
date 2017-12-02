@@ -33,6 +33,7 @@ module.exports = (app) => {
 	app.put('/admin/mentors/:mentorId/:eventId', mentorsController.eventMentorUpdate); // all post list route
 	app.put('/admin/students/:studentId/:eventId', studentsController.eventStudentUpdate); // all post list route
 	app.get('/api/students/:page?', studentsController.index);
+	app.get('/api/mentors/:page?', mentorsController.index);
 	
 
 	app.get('/check-state', auth.IsAuthenticated, (req, res) => {

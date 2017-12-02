@@ -68,5 +68,110 @@ module.exports = {
 			)
 			.catch( error => res.status(404).send(error) );
 	},
-
+	index(req, res){
+		let limit = 9;
+		let offset = 0;
+		let industry = req.query.industry || null;
+		let role = req.query.role || null;
+		let country = req.query.country || null;
+		let city = req.query.city || null;
+		let page = req.params.page || 1;	
+		console.log(page)
+		return Mentor
+			.findAndCountAll().then(data => {
+				
+				if(data.count/limit<page){
+					page = 1;
+				}
+				let pages = Math.ceil(data.count /limit);
+				offset = limit * (page -1);
+				if(role != null && industry != null && country != null && city != null ){
+					// industry, role, country, city specific search
+					// industry, country specific search
+					// role, city specific search
+					// country, city specific search
+					// industry specific search
+					// role specific search
+					// country specific search
+					// city specific search
+				} else if( role != null){
+					Mentor.findAll(
+						{
+							where: {
+							role: {$ilike: '%' + req.query.role + '%'}
+							},
+							include: [
+							{model:Country},
+							{model:City},							
+							{model:Event}
+						],
+						limit: limit,
+						offset: offset,
+					})
+					.then(event => res.status(200).send(event) )
+					.catch( error => res.status(400).send(error) );					
+				} else if( industry != null){
+					Mentor.findAll(
+						{
+							where: {
+							industry: {$ilike: '%' + req.query.industry + '%'}
+							},
+							include: [
+							{model:Country},
+							{model:City},							
+							{model:Event}
+						],
+						limit: limit,
+						offset: offset,
+					})
+					.then(event => res.status(200).send(event) )
+					.catch( error => res.status(400).send(error) );					
+				} else if( country != null){
+					Mentor.findAll(
+						{
+							where: {
+							country: {$ilike: '%' + req.query.country + '%'}
+							},
+							include: [
+							{model:Country},
+							{model:City},							
+							{model:Event}
+						],
+						limit: limit,
+						offset: offset,
+					})
+					.then(event => res.status(200).send(event) )
+					.catch( error => res.status(400).send(error) );				
+				} else if( city != null){
+					Mentor.findAll(
+						{
+							where: {
+							city: {$ilike: '%' + req.query.city + '%'}
+							},
+							include: [
+							{model:Country},
+							{model:City},
+							{model:Event}
+						],
+						limit: limit,
+						offset: offset,
+					})
+					.then(event => res.status(200).send(event) )
+					.catch( error => res.status(400).send(error) );				
+				} else {
+					Mentor.findAll({
+						include: [
+							{model:Country},
+							{model:City},							
+							{model:Event}
+						],
+						limit: limit,
+						offset: offset,
+					})
+					
+				.then(event => res.status(200).send(event) )
+				.catch( error => res.status(400).send(error) );
+				}
+	})
+	}
 };
