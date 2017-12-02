@@ -32,9 +32,12 @@ module.exports = (app) => {
 	app.get('/admin/events/:type', eventsController.indexType); // all post list route
 	app.put('/admin/mentors/:mentorId/:eventId', mentorsController.eventMentorUpdate); // all post list route
 	app.put('/admin/students/:studentId/:eventId', studentsController.eventStudentUpdate); // all post list route
-	app.get('/api/students/:page?', studentsController.index);
-	app.get('/api/mentors/:page?', mentorsController.index);
-	
+		// is this necessary?? app.get('/signout', auth.IsAuthenticated, auth.destroySession);
+	// probs don't need profile api as we get the details another way... 
+
+	app.get('/api/students/:studentId', studentsController.profile);
+	app.put('/api/students/:studentId', studentsController.profileUpdate);
+	app.get('/api/students/:page?', studentsController.index);		
 
 	app.get('/check-state', auth.IsAuthenticated, (req, res) => {
 		let content = {
@@ -44,14 +47,11 @@ module.exports = (app) => {
 		res.send(content);
 	});
 
-	// is this necessary?? app.get('/signout', auth.IsAuthenticated, auth.destroySession);
-	// probs don't need profile api as we get the details another way... 
-	app.get('/api/students/:studentId', studentsController.profile);
-	app.put('/api/students/:studentId', studentsController.profileUpdate);
 
 	app.get('/api/mentors/:mentorId', mentorsController.profile);
 	app.put('/api/mentors/:mentorId', mentorsController.profileUpdate);
-
+	app.get('/api/mentors/:page?', mentorsController.index);
+	
 	// All events routes
 	// fix the , auth.IsAuthenticated , bit
 	app.post('/api/events/', eventsController.create); // new post route

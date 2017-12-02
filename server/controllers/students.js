@@ -5,41 +5,6 @@ const Country 	= require('../models').country;
 const City 	= require('../models').city;
 
 module.exports = {
-	// below api not really needed?
-	profile(req, res, next) {
-		// EventStudent.findOne({
-		// 	where: { studentId: req.params.studentId },
-		// 	include: [{model:Event}]					
-		// })
-		// .then(events => {
-			return Student
-				.findById(req.params.studentId, {
-					include: [
-							{model: Country}
-					]
-				})
- 
-				.then(
-					student => {
-
-						// student.dataValues.EventsEnrolled = events;
-					
-						if (!student) {
-						return res.status(400).send({success: false, message: 'User not Found'});
-						}
-					
-						// const data = {
-						// 	id: user.id,
-						// 	username: user.username,
-						// 	email: user.email
-						// }
-						return res.status(200).send({student});
-
-				})
-				.catch(error => res.status(400).send(error));
-			// } )
-			// .catch( error => console.log(error) );
-	},
 	profileUpdate(req, res, next) {
 		return Student
 			.findById(req.params.studentId, {
@@ -162,5 +127,42 @@ module.exports = {
 				.catch( error => res.status(400).send(error) );
 				}
 	})
-	}
+	},
+		// below api not really needed?
+		profile(req, res) {
+			
+			// EventStudent.findOne({
+			// 	where: { studentId: req.params.studentId },
+			// 	include: [{model:Event}]					
+			// })
+			// .then(events => {
+				return Student
+					.findAll({
+						where: {id:req.params.studentId},
+						include: [
+								{model: Country}
+						]
+					})
+	 
+					.then(
+						student => {
+							
+							// student.dataValues.EventsEnrolled = events;
+						
+							if (!student) {
+							return res.status(400).send({success: false, message: 'User not Found'});
+							}
+						
+							// const data = {
+							// 	id: user.id,
+							// 	username: user.username,
+							// 	email: user.email
+							// }
+							return res.status(200).send(student);
+	
+					})
+					.catch(error => res.status(400).send(error));
+				// } )
+				// .catch( error => console.log(error) );
+		},
 };
