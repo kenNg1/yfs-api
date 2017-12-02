@@ -86,7 +86,7 @@ module.exports = {
 							token 	: token,
 							id	: user.id,
 							email	: user.email,
-							username: user.username
+							tier: user.tier							
 						});
 					});
 				}

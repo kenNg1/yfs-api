@@ -34,7 +34,6 @@ module.exports = {
 							token 	: token,
 							id	: admin.id,
 							email	: admin.email,
-							username: admin.username,
 							tier: admin.tier
 						});
 					});
