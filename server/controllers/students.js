@@ -7,22 +7,22 @@ const City 	= require('../models').city;
 module.exports = {
 	// below api not really needed?
 	profile(req, res, next) {
-		EventStudent.findAll({
-			where: { student_id: req.params.studentId },
-			include: [{model:Event}]					
-		})
-		.then(events => {
+		// EventStudent.findOne({
+		// 	where: { studentId: req.params.studentId },
+		// 	include: [{model:Event}]					
+		// })
+		// .then(events => {
 			return Student
 				.findById(req.params.studentId, {
 					include: [
 							{model: Country}
 					]
 				})
-
+ 
 				.then(
 					student => {
 
-						student.dataValues.EventsEnrolled = events;
+						// student.dataValues.EventsEnrolled = events;
 					
 						if (!student) {
 						return res.status(400).send({success: false, message: 'User not Found'});
@@ -37,8 +37,8 @@ module.exports = {
 
 				})
 				.catch(error => res.status(400).send(error));
-			} )
-			.catch( error => console.log(error) );
+			// } )
+			// .catch( error => console.log(error) );
 	},
 	profileUpdate(req, res, next) {
 		return Student

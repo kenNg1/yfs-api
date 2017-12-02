@@ -116,7 +116,8 @@ module.exports = {
 				return res.status(200).send({
 					token 	: token,
 					id	: user.id,
-					email	: user.email
+					email	: user.email,
+					tier: user.tier
 				});
 			});
 		})(req, res, next);
