@@ -57,6 +57,8 @@ services:
   pg:
     # the below credentials will be created on the build
     image: postgres:9.6.2-alpine
+    ports:
+    - "5433:5432"
     environment:
       POSTGRES_USER: "qwertup"
       POSTGRES_PASSWORD: "buffered07"
@@ -67,6 +69,9 @@ services:
 # run docker-compose run
 # run docker ps -a
 # run docker exec -it <container name> bash for postgres
+  # psql -U qwertup yfs_api_dev to connect to the DB
+  # to find out location on config file show config_file;
+  # docker cp 5b7a4bc30568:/var/lib/postgresql/data/postgresql.conf . 
 # run docker exec -it <container name> sh for node
 # when in node bash run sequelize db:migrate , sequelize db:seed
 # sequelize db:seed --seed <seed file name> for a specific seed
