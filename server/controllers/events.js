@@ -114,7 +114,7 @@ module.exports = {
 		let offset = 0;
 		let type = req.query.type || null;
 		let location = req.query.location || null;
-		let page = req.params.page || 1;	
+		let page = req.query.page || 1;	
 		console.log(page)
 		return Event
 			.findAndCountAll().then(data => {
@@ -160,7 +160,9 @@ module.exports = {
 					.catch( error => res.status(400).send(error) );				
 				} else {
 					Event.findAll(
-						{include: [
+						
+						{	
+							include: [
 							{model:Country},
 							{model:City},
 							{model:Student},
@@ -185,6 +187,7 @@ module.exports = {
 		// .then(students => {
 			return Event
 				.findById(req.params.eventId, {
+					
 					// includeAll:true
 					include: [
 						{model:Country},

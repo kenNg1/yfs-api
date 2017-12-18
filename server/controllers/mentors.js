@@ -8,7 +8,8 @@ module.exports = {
 	// below api not really needed?
 	profile(req, res, next) {
 			return Mentor
-				.findById(req.params.mentorId, {
+				.findOne({
+					where: {userId:req.params.userId}, 
 					include: [
 							{model: Country},
 							{model: City},
@@ -19,10 +20,10 @@ module.exports = {
 					mentor => {
 					
 						if (!mentor) {
-							return res.status(400).send({success: false, message: 'User not Found'});
+							return res.status(400).send({success: false, message: 'Mentor not Found'});
 						}
 						
-						return res.status(200).send({mentor});
+						return res.status(200).send(mentor);
 
 				})
 				.catch(error => res.status(400).send(error));
@@ -30,7 +31,8 @@ module.exports = {
 	},
 	profileUpdate(req, res, next) {
 		return Mentor
-			.findById(req.params.mentorId, {
+			.findOne({
+				where: {user_id:req.params.userId}, 
 				include: [
 						{model: Country},
 						{model: City}
@@ -43,11 +45,14 @@ module.exports = {
 					if(!mentor) return res.status(404).send({message: "Mentor Not Found![2]"});
 					return mentor
 						.update(req.body, { fields: Object.keys(req.body) })
-						.then( updateDetail => res.status(200).send(mentor) )
+						.then( updateDetail => {
+							
+							res.status(200).send(mentor)
+						 } )
 						.catch( errorUpdate => res.status(400).send(errorUpdate) );
 				}
 			)
-			.catch( error => res.status(404).send(error) );
+			.catch( error => res.status(404).send({message:'error!!'}) );
 	},
 	eventMentorUpdate(req, res) {
 		return EventMentor

@@ -7,10 +7,11 @@ const City 	= require('../models').city;
 module.exports = {
 	profileUpdate(req, res, next) {
 		return Student
-			.findById(req.params.studentId, {
-				include: [
-						{model: Country}
-				]
+			.findOne({
+				where:{userId:req.params.userId},
+				// include: [
+				// 		{model: Country}
+				// ]
 			})
 			.then(
 				student => {
@@ -116,7 +117,7 @@ module.exports = {
 				} else {
 					Student.findAll({
 						include: [
-							{model:Country},
+							{model:Country, attributes: { exclude: ['id'] }},
 							{model:Event}
 						],
 						limit: limit,
@@ -137,10 +138,10 @@ module.exports = {
 			// })
 			// .then(events => {
 				return Student
-					.findAll({
-						where: {id:req.params.studentId},
+					.findOne({
+						where: {user_id:req.params.userId},
 						include: [
-								{model: Country}
+								{model: Country, attributes: { exclude: ['id'] }}
 						]
 					})
 	 
@@ -150,7 +151,7 @@ module.exports = {
 							// student.dataValues.EventsEnrolled = events;
 						
 							if (!student) {
-							return res.status(400).send({success: false, message: 'User not Found'});
+							return res.status(400).send({success: false, message: 'Student not Found'});
 							}
 						
 							// const data = {
@@ -158,6 +159,7 @@ module.exports = {
 							// 	username: user.username,
 							// 	email: user.email
 							// }
+							// student.dataValues.country = 
 							return res.status(200).send(student);
 	
 					})

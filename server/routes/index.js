@@ -8,10 +8,10 @@ const auth = require('../config/auth');
 const emailValidator = require('../config/emailValidator');
 
 module.exports = (app) => {
-	app.get('/', (req, res) => res.status(200).send({
-		message: "App up and running"
-	}));
 
+
+
+	
 	app.get('/api', auth.IsAuthenticated, (req, res) => res.status(200).send({
 		message: "Welcome to Unknow Post Api"
 	}));
@@ -35,8 +35,8 @@ module.exports = (app) => {
 		// is this necessary?? app.get('/signout', auth.IsAuthenticated, auth.destroySession);
 	// probs don't need profile api as we get the details another way... 
 
-	app.get('/api/students/:studentId', studentsController.profile);
-	app.put('/api/students/:studentId', studentsController.profileUpdate);
+	app.get('/api/students/:userId', studentsController.profile);
+	app.put('/api/students/:userId', studentsController.profileUpdate);
 	app.get('/api/students/:page?', studentsController.index);		
 
 	app.get('/check-state', auth.IsAuthenticated, (req, res) => {
@@ -48,8 +48,8 @@ module.exports = (app) => {
 	});
 
 
-	app.get('/api/mentors/:mentorId', mentorsController.profile);
-	app.put('/api/mentors/:mentorId', mentorsController.profileUpdate);
+	app.get('/api/mentors/:userId', mentorsController.profile);
+	app.put('/api/mentors/:userId', mentorsController.profileUpdate);
 	app.get('/api/mentors/:page?', mentorsController.index);
 	
 	// All events routes
