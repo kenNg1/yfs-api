@@ -62,7 +62,7 @@ app.get('*', (req, res) => {
 });
 
 // setting up the port
-const port = parseInt(process.env.PORT, 10) || '8080';
+const port = parseInt(process.env.PORT, 10) || '8000';
 // const port = parseInt(process.env.PORT, 10) || '3000';
 app.listen(port);
 
