@@ -3,7 +3,6 @@ module.exports = (sequelize, DataTypes) => {
   var Student = sequelize.define('student', {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    nickname: DataTypes.STRING,
     image: DataTypes.STRING,
     schoolName: DataTypes.STRING,
     gender: DataTypes.STRING,
