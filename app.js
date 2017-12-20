@@ -9,8 +9,8 @@ const passport	= require('passport');
 const jwt		= require('jsonwebtoken');
 	
 // Setting up the server
-const path = require('path');
 const app = express();
+const path = require('path');
 
 
 /*------------------Routing Started ------------------------*/
@@ -48,6 +48,14 @@ require('./server/routes')(app);
 
 // comment this out during development mode
 app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/ping', function (req, res) {
+    return res.send('pong');
+   });
+   
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
