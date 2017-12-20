@@ -5,3 +5,9 @@ p {
 .navbar-burger {
   margin-top: 10px;
 }
+
+.columns.is-vcentered {
+  -webkit-box-align: center;
+     -ms-flex-align: center;
+        align-items: center;
+}
