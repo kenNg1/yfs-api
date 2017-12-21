@@ -40,25 +40,32 @@ module.exports = {
 					.then(user => {
 						console.log(link);
 						if(req.body.tier === 'student'){
-							Student.create({
-								userId: user.id,
-								firstName: req.body.firstName,
-								lastName: req.body.lastName,
-								countryId: req.body.countryId,
-								nickname: req.body.nickname,
-								image: 'https://cdn4.iconfinder.com/data/icons/follower/512/login-man-person-human-body-512.png',
-								schoolName: req.body.schoolName,
-								gender: req.body.gender,
-								dob: req.body.dob,
-								mobileNumber: req.body.mobileNumber,
-								googleSlides: req.body.googeSlides,
-								googleDocs: req.body.googeDocs,
-								microsoftOffice: req.body.microsoftOffice,
-								willGoUni: req.body.willGoUni,
-								desiredUniversity: req.body.desiredUniversity,
-								graduationPlans: req.body.graduationPlans,
-								heardThrough: req.body.heardThrough
+							Country.findOne({
+								where:{name:req.body.countryName},
 							})
+							.then( country =>{
+								let $country = country.id
+								Student.create({
+									userId: user.id,
+									firstName: req.body.firstName,
+									lastName: req.body.lastName,
+									countryId: $country,
+									nickname: req.body.nickname,
+									image: 'https://cdn4.iconfinder.com/data/icons/follower/512/login-man-person-human-body-512.png',
+									schoolName: req.body.schoolName,
+									gender: req.body.gender,
+									dob: req.body.dob,
+									mobileNumber: req.body.mobileNumber,
+									googleSlides: req.body.googeSlides,
+									googleDocs: req.body.googeDocs,
+									microsoftOffice: req.body.microsoftOffice,
+									willGoUni: req.body.willGoUni,
+									desiredUniversity: req.body.desiredUniversity,
+									graduationPlans: req.body.graduationPlans,
+									heardThrough: req.body.heardThrough
+								});
+							})
+							.catch()
 						} else if (req.body.tier === 'mentor'){
 							Mentor.create({
 								userId: user.id,
