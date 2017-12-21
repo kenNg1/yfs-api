@@ -2,10 +2,16 @@ body{
   overflow-x: hidden;
 }
 
+.navbar-item {
+  cursor: pointer;  
+}
+
 p {
     font-size: 12px;
   }
 
+
+  
 .navbar-burger {
   margin-top: 10px;
 }
