@@ -106,7 +106,7 @@ module.exports = {
 			}
 
 			if (!user) {
-				return res.status(401).send({message: 'authentication failed'});
+				return res.status(401).send({message: 'Login failed, please check your email or password'});
 			}
 
 			req.login(user, (err) => {
