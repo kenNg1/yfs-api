@@ -1,7 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var EventStudent = sequelize.define('event_student', {
-    accepted: DataTypes.BOOLEAN
+    status: DataTypes.STRING,
+    businessIdea: DataTypes.BOOLEAN,
+    businessIdeaDesc: DataTypes.TEXT,    
+    openToOtherIdeas: DataTypes.BOOLEAN,    
+    videoLink: DataTypes.STRING, 
   }, {
     classMethods: {
       associate: function(models) {}

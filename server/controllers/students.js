@@ -26,6 +26,30 @@ module.exports = {
 			)
 			.catch( error => res.status(404).send(error) );
 	},
+	eventStudentCreate(req, res){
+		return Student
+		.findOne({
+			where:{userId:req.body.userId},
+		})
+		.then(
+			student => {
+				if(!student) return res.status(404).send({message: "Student Not Found![2]"});
+				return EventStudent
+					.create({
+						businessIdea: req.body.businessIdea,
+						businessIdeaDesc: req.body.businessIdeaDesc,    
+						openToOtherIdeas: req.body.openToOtherIdeas,    
+						videoLink: req.body.videoLink,  
+						status:"Registered",  
+						eventId	: req.params.eventId,
+						studentId: student.id
+					})
+					.then(event => res.status(200).send(event))
+					.catch(error => res.status(400).send(error));
+			}
+		)
+		.catch( error => res.status(404).send(error) );
+	},
 	eventStudentUpdate(req, res) {
 		return EventStudent
 			.findOne({where: {
@@ -44,6 +68,23 @@ module.exports = {
 				}
 			)
 			.catch( error => res.status(404).send(error) );
+	},
+	eventStudentIndex(req, res){
+		return Student
+		.findOne({
+			where:{userId:req.params.userId},
+		})
+		.then(
+			student => {
+				if(!student) return res.status(404).send({message: "Student Not Found![2]"});
+				EventStudent.findAll(
+					{where: {studentId:student.id},
+				})
+				.then(eventStudent => res.status(200).send(eventStudent) )
+				.catch( error => res.status(400).send(error) );
+			}
+		)
+		.catch( error => res.status(404).send(error) );
 	},
 	index(req, res){
 		let limit = 9;
@@ -141,7 +182,9 @@ module.exports = {
 					.findOne({
 						where: {user_id:req.params.userId},
 						include: [
-								{model: Country, attributes: { exclude: ['id'] }}
+								{model: Country, attributes: { exclude: ['id'] }},
+								{model:Event, include:[{model:Country}]
+							}
 						]
 					})
 	 

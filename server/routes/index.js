@@ -37,6 +37,9 @@ module.exports = (app) => {
 
 	app.get('/api/students/:userId', studentsController.profile);
 	app.put('/api/students/:userId', studentsController.profileUpdate);
+	app.post('/api/students/register-event/:eventId', studentsController.eventStudentCreate);
+	app.get('/api/students/events-registered/:userId', studentsController.eventStudentIndex);
+	
 	app.get('/api/students/:page?', studentsController.index);		
 
 	app.get('/check-state', auth.IsAuthenticated, (req, res) => {
