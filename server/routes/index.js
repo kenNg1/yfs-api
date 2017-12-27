@@ -9,9 +9,6 @@ const emailValidator = require('../config/emailValidator');
 
 module.exports = (app) => {
 
-
-
-	
 	app.get('/api', auth.IsAuthenticated, (req, res) => res.status(200).send({
 		message: "Welcome to Unknow Post Api"
 	}));
