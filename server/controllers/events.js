@@ -139,7 +139,7 @@ module.exports = {
 							{model:City},],
 						limit: limit,
 						offset: offset,
-						order: '"deadline" ASC'
+						order: '"date" ASC'
 					})
 					.then(event => res.status(200).send(event) )
 					.catch( error => res.status(400).send(error) );					
@@ -154,7 +154,7 @@ module.exports = {
 							{model:City},],
 						limit: limit,
 						offset: offset,
-						order: '"deadline" ASC'
+						order: '"date" ASC'
 					})
 					.then(event => res.status(200).send(event) )
 					.catch( error => res.status(400).send(error) );				
@@ -169,7 +169,7 @@ module.exports = {
 						],
 						limit: limit,
 						offset: offset,
-						order: '"deadline" ASC'						
+						order: '"date" ASC'						
 					})
 					
 				.then(event => res.status(200).send(event) )
