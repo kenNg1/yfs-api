@@ -10,7 +10,42 @@ p {
     font-size: 12px;
   }
 
+.table {
+  margin:0 auto;
+  width:100%;
+  border-radius:7px;
+}
 
+.table th {
+  background-color:rgba(255,255,255,0);
+  color:white;
+}
+
+.table td, .table th {
+  font-size:95%;
+  padding: 0.25em 0.5em;
+}
+
+div.box ul li {
+  list-style-type: circle;
+  list-style-position: inside;
+}
+
+@media(min-width:769px){
+  .table td, .table th {
+    font-size:115%;
+    padding: 0.25em 0.5em;
+  }
+}
+
+
+.table-row{
+  font-size:0.7rem;
+}
+
+/* .table-row:hover{
+  background-color:#00d1b228;
+} */
   
 .navbar-burger {
   margin-top: 10px;

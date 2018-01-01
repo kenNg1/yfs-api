@@ -4,6 +4,7 @@ const Mentor 	= require('../models').mentor;
 const Event 	= require('../models').event;
 const EventStudent 	= require('../models').event_student;
 const Country 	= require('../models').country;
+const City 	= require('../models').city;
 const passport 	= require('passport');
 const jwt 		= require('jsonwebtoken');
 const config	= require('../config/general');
@@ -67,19 +68,32 @@ module.exports = {
 							})
 							.catch()
 						} else if (req.body.tier === 'mentor'){
-							Mentor.create({
-								userId: user.id,
-								firstName: req.body.firstName,
-								lastName: req.body.lastName,
-								countryId: req.body.countryId,
-								cityId: req.body.cityId,
-								mobileNumber: req.body.mobileNumber,
-								companyName: req.body.companyName,
-								industry: req.body.industry,
-								title: req.body.title,
-								participation: req.body.participation,
-								about: req.body.about,
+							Country.findOne({
+								where:{name:req.body.countryName},
 							})
+							.then( country =>{
+								City.findOne({
+									where:{name:req.body.cityName},
+								})
+								.then(city =>{
+									let $country = country.id;
+									let $city = city.id;
+
+									Mentor.create({
+									userId: user.id,
+									firstName: req.body.firstName,
+									lastName: req.body.lastName,
+									countryId: $country,
+									cityId: $city,
+									mobileNumber: req.body.mobileNumber,
+									companyName: req.body.companyName,
+									industry: req.body.industry,
+									title: req.body.title,
+									participation: req.body.participation,
+									about: req.body.about,
+								})
+							})
+						})
 						}
 						return user;
 					})

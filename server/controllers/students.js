@@ -79,6 +79,16 @@ module.exports = {
 			studentEvent => {
 				console.log(studentEvent);
 				console.log(req.body)
+
+				if(req.body.status=="Confirmed"||req.body.status=="Cancelled"){
+					console.log("Recount all of the eventstudent where eventId then update the event");
+					// const confirmedStudents = 0;
+					// return event
+					// 	.update(req.body, { fields: Object.keys(req.body) })
+					// 	.then( updateEvent => res.status(200).send(event) )
+					// 	.catch( errorUpdate => res.status(400).send(errorUpdate) );
+				}
+
 				if(!studentEvent) return res.status(404).send({message: "Student Not Found![2]"});
 				return studentEvent
 					.update(req.body, { fields: Object.keys(req.body) })
