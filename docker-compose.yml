@@ -76,5 +76,8 @@ services:
 # when in node bash run sequelize db:migrate , sequelize db:seed
 # sequelize db:seed --seed <seed file name> for a specific seed
 
+# IMPORTANT: MIGRATIONS -
+#   - make sure that you docker-compose stop & docker-compose-up to refresh the database build
+
 
 # if unable to run try on server try ngrok >> ngrok http 3000 -host-header="localhost:3000"
