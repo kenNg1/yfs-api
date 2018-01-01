@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     businessIdeaDesc: DataTypes.TEXT,    
     openToOtherIdeas: DataTypes.BOOLEAN,    
     videoLink: DataTypes.STRING, 
+    cancellationReason: DataTypes.STRING, 
   }, {
     classMethods: {
       associate: function(models) {}

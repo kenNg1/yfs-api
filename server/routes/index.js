@@ -28,13 +28,14 @@ module.exports = (app) => {
 	// auth is authenticated
 	app.get('/admin/events/:type', eventsController.indexType); // all post list route
 	app.put('/admin/mentors/:mentorId/:eventId', mentorsController.eventMentorUpdate); // all post list route
-	app.put('/admin/students/:studentId/:eventId', studentsController.eventStudentUpdate); // all post list route
+	app.put('/admin/students/:studentId/:eventId', studentsController.eventStudentAdminUpdate); // all post list route
 		// is this necessary?? app.get('/signout', auth.IsAuthenticated, auth.destroySession);
 	// probs don't need profile api as we get the details another way... 
 
 	app.get('/api/students/:userId', studentsController.profile);
 	app.put('/api/students/:userId', studentsController.profileUpdate);
 	app.post('/api/students/register-event/:eventId', studentsController.eventStudentCreate);
+	app.put('/api/students/register-event/:eventId', studentsController.eventStudentUpdate);
 	app.get('/api/students/events-registered/:userId', studentsController.eventStudentIndex);
 	
 	app.get('/api/students/:page?', studentsController.index);		

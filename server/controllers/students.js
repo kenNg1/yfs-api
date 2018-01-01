@@ -50,11 +50,11 @@ module.exports = {
 		)
 		.catch( error => res.status(404).send(error) );
 	},
-	eventStudentUpdate(req, res) {
+	eventStudentAdminUpdate(req, res) {
 		return EventStudent
 			.findOne({where: {
-				studentId: req.params.studentId,
 				eventId: req.params.eventId,
+				studentId: req.params.studentId,
 			} })
 			.then(
 				studentEvent => {
@@ -68,6 +68,26 @@ module.exports = {
 				}
 			)
 			.catch( error => res.status(404).send(error) );
+	},
+	eventStudentUpdate(req, res) {
+		return EventStudent
+		.findOne({where: {
+			eventId: req.params.eventId,
+			studentId: req.body.studentId
+		} })
+		.then(
+			studentEvent => {
+				console.log(studentEvent);
+				console.log(req.body)
+				if(!studentEvent) return res.status(404).send({message: "Student Not Found![2]"});
+				return studentEvent
+					.update(req.body, { fields: Object.keys(req.body) })
+					.then( updateDetail => res.status(200).send(studentEvent) )
+					.catch( errorUpdate => res.status(400).send(errorUpdate) );
+			}
+		)
+		.catch( error => res.status(404).send(error) );
+
 	},
 	eventStudentIndex(req, res){
 		return Student
