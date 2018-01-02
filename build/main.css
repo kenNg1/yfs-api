@@ -2,6 +2,22 @@ body{
   overflow-x: hidden;
 }
 
+.title-left-favicon {
+  display:inline;
+  margin-left: 5px;
+}
+
+.favicon-title {
+  font-size:20px;
+  position: relative;
+  top:-2px
+}
+
+.title-right-favicon {
+  display:inline;
+  margin-right: 5px;
+}
+
 .navbar-item {
   cursor: pointer;  
 }
