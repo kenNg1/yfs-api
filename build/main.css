@@ -54,6 +54,11 @@ div.box ul li {
   }
 }
 
+@media screen and (min-width: 769px) {
+  .field-label {
+    flex-grow: 1.5;
+  }
+}
 
 .table-row{
   font-size:0.7rem;
