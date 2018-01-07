@@ -57,7 +57,8 @@ module.exports = {
 	getCountries(req, res) {
 		return Country
 			.findAll({
-				attributes: { exclude: ['id'] }
+				attributes: { exclude: ['id'] },
+				order:'"name" ASC' 
 			})
 			.then(
 				countries => {

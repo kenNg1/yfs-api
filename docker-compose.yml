@@ -70,6 +70,7 @@ services:
 # run docker ps -a
 # run docker exec -it <container name> bash for postgres
   # psql -U qwertup yfs_api_dev to connect to the DB
+  ### TRUNCATE TABLE countries RESTART IDENTITY CASCADE; In order to delete all data and reset table index of all tables
   # to find out location on config file show config_file;
   # docker cp 5b7a4bc30568:/var/lib/postgresql/data/postgresql.conf . 
 # run docker exec -it <container name> sh for node
