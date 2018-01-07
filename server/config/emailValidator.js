@@ -26,7 +26,7 @@ module.exports = {
         var mailOptions;
         /*------------------SMTP Over-----------------------------*/
 
-        url="http://localhost:8000/verify?id="+link;
+        url="http://139.59.119.171/verify?id="+link;
         
         mailOptions={
             to : email,
