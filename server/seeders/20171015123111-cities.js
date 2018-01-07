@@ -3,8 +3,8 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
       return queryInterface.bulkInsert('cities', [
-        {name: "Hong Kong",country_id:1},
-        {name: "Shenzhen",country_id:2},
+        {name: "Hong Kong",country_id:91},
+        {name: "Shenzhen",country_id:42},
         ],{})
   },
 
