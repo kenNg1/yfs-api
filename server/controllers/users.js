@@ -57,8 +57,8 @@ module.exports = {
 									gender: req.body.gender,
 									dob: req.body.dob,
 									mobileNumber: req.body.mobileNumber,
-									googleSlides: req.body.googeSlides,
-									googleDocs: req.body.googeDocs,
+									googleSlides: req.body.googleSlides,
+									googleDocs: req.body.googleDocs,
 									microsoftOffice: req.body.microsoftOffice,
 									willGoUni: req.body.willGoUni,
 									desiredUniversity: req.body.desiredUniversity,
@@ -152,9 +152,17 @@ module.exports = {
 					.catch()
 				} else if (user.tier === 'mentor'){
 					Mentor.findOne({
-						where:{userId:req.params.userId},
+						where:{userId:user.id},
 					})
-					.then()
+					.then( mentor =>{
+						return res.status(200).send({
+							token 	: token,
+							id	: user.id,
+							email	: user.email,
+							tier: user.tier,
+							firstName: mentor.firstName
+						});
+					})
 					.catch()
 				}
 			});

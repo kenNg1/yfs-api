@@ -78,22 +78,56 @@ module.exports = {
 		.then(
 			studentEvent => {
 				console.log(studentEvent);
-				console.log(req.body)
+				console.log("reqqqq",req.body)
 
 				if(req.body.status=="Confirmed"||req.body.status=="Cancelled"){
-					console.log("Recount all of the eventstudent where eventId then update the event");
-					// const confirmedStudents = 0;
-					// return event
-					// 	.update(req.body, { fields: Object.keys(req.body) })
-					// 	.then( updateEvent => res.status(200).send(event) )
-					// 	.catch( errorUpdate => res.status(400).send(errorUpdate) );
+					return EventStudent.findAndCountAll({
+								where:{status:"Confirmed"}
+							}).then(count=>	{
+								console.log("RECOUNT!",count.count)
+								if(req.body.status=="Confirmed"){
+									count.count++
+								} else if(req.body.status=="Cancelled") {
+									count.count--
+								}
+								Event.findOne({
+									where:{id:req.body.eventId}
+								}).then(event=>{
+									event.update({studentsIn:count.count}).then(event=>{
+										if(!studentEvent) return res.status(404).send({message: "Student Not Found![2]"});
+										return studentEvent
+											.update(req.body, { fields: Object.keys(req.body) })
+											.then( updateDetail => res.status(200).send(studentEvent) )
+											.catch( errorUpdate => res.status(400).send(errorUpdate) );
+									})
+								})
+							})
 				}
 
-				if(!studentEvent) return res.status(404).send({message: "Student Not Found![2]"});
-				return studentEvent
-					.update(req.body, { fields: Object.keys(req.body) })
-					.then( updateDetail => res.status(200).send(studentEvent) )
-					.catch( errorUpdate => res.status(400).send(errorUpdate) );
+				// 	console.log("Recount all of the eventstudent where eventId then update the event");
+				// 	return EventStudent.findAndCountAll({
+				// 		where:{status:"Confirmed"}
+				// 	}).then(count=>{
+				// 		return Event.findOne({
+				// 	{		where:{id:req.body.eventId}
+				// 		}).then(event=>{
+				// 			console.log("EVENT!!",event)
+				// 			event.update({studentsIn:count})
+
+				// 			if(!studentEvent) return res.status(404).send({message: "Student Not Found![2]"});
+				// 			return studentEvent
+				// 				.update(req.body, { fields: Object.keys(req.body) })
+				// 				.then( updateDetail => res.status(200).send(studentEvent) )
+				// 				.catch( errorUpdate => res.status(400).send(errorUpdate) );
+				// 		})
+				// 	})
+				// } else 
+					if(!studentEvent) return res.status(404).send({message: "Student Not Found![2]"});
+					return studentEvent
+						.update(req.body, { fields: Object.keys(req.body) })
+						.then( updateDetail => res.status(200).send(studentEvent) )
+						.catch( errorUpdate => res.status(400).send(errorUpdate) );
+				// }
 			}
 		)
 		.catch( error => res.status(404).send(error) );
@@ -213,9 +247,8 @@ module.exports = {
 						where: {user_id:req.params.userId},
 						include: [
 								{model: Country, attributes: { exclude: ['id'] }},
-								{model:Event, include:[{model:Country}]
-							}
-						]
+								{model:Event, include:[{model:Country}]}
+						],
 					})
 	 
 					.then(
