@@ -54,19 +54,19 @@ module.exports = {
 			)
 			.catch( error => res.status(404).send({message:'error!!'}) );
 	},
-	// getCountries(req, res) {
-	// 	return Country
-	// 		.findAll({
-	// 			attributes: { exclude: ['id'] }
-	// 		})
-	// 		.then(
-	// 			countries => {
+	getCountries(req, res) {
+		return Country
+			.findAll({
+				attributes: { exclude: ['id'] }
+			})
+			.then(
+				countries => {
 
-	// 				return res.status(200).send(countries) 
-	// 			}
-	// 		)
-	// 		.catch( error => res.status(404).send(error) );
-	// },
+					return res.status(200).send(countries) 
+				}
+			)
+			.catch( error => res.status(404).send(error) );
+	},
 	eventMentorUpdate(req, res) {
 		return EventMentor
 			.findOne({where: {

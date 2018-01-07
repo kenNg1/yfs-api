@@ -52,7 +52,7 @@ module.exports = (app) => {
 	app.get('/api/mentors/:userId', mentorsController.profile);
 	app.put('/api/mentors/:userId', mentorsController.profileUpdate);
 	app.get('/api/mentors/:page?', mentorsController.index);
-	// app.get('/getcountries', mentorsController.getCountries);
+	app.get('/getcountries', mentorsController.getCountries);
 	
 	// All events routes
 	// fix the , auth.IsAuthenticated , bit
