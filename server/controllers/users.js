@@ -132,6 +132,7 @@ module.exports = {
 
 			req.login(user, (err) => {
 				if (err) return next(err);
+				console.log("...",req);
 				console.log("now check email",user.dataValues);
 
 				const token = jwt.sign({ user: user.id }, config.secret, {expiresIn: 24 * 60 * 60});
