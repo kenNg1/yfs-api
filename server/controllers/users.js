@@ -95,13 +95,7 @@ module.exports = {
 							})
 						})
 						}
-						return user;
-					})
-					.then(user => {
 						emailValidator.send(link,req,user.dataValues.email)
-						return user
-					})
-					.then(user => {
 						const token = jwt.sign({ user: user.id }, config.secret, {expiresIn: 24 * 60 * 60});
 						res.status(200).send({
 							token 	: token,
@@ -110,10 +104,11 @@ module.exports = {
 							tier: user.tier,
 							firstName: req.body.firstName						
 						});
-					});
+					})
+					.catch(error => res.status(400).send(error));
 				}
 				else {
-					return res.status(400).send({message: 'Username / Email is Already Exist'});
+					return res.status(400).send({message: 'Username / Email Already Exists'});
 				}
 			})
 			.catch(error => res.status(400).send(error));
