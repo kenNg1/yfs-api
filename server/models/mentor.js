@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     companyName: DataTypes.STRING,
     industry: DataTypes.STRING,
     title: DataTypes.STRING,
-    participation: DataTypes.STRING,
+    participation: DataTypes.ARRAY(DataTypes.STRING),
     about: DataTypes.TEXT,
     
   }, {
