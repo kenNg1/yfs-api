@@ -6,14 +6,14 @@ const City 	= require('../models').city;
 
 module.exports = {
 	// below api not really needed?
-	profile(req, res, next) {
+	profile(req, res) {
 			return Mentor
 				.findOne({
 					where: {userId:req.params.userId}, 
 					include: [
-							{model: Country},
+							{model: Country, attributes:{exclude:['id'] }},
 							{model: City},
-							{model:Event}
+							{model:Event, include:[{model:Country}]}
 					]
 				})
 				.then(
@@ -33,10 +33,10 @@ module.exports = {
 		return Mentor
 			.findOne({
 				where: {user_id:req.params.userId}, 
-				include: [
-						{model: Country},
-						{model: City}
-				]
+				// include: [
+				// 		{model: Country},
+				// 		{model: City}
+				// ]
 			})
 			.then(
 				mentor => {
@@ -45,14 +45,11 @@ module.exports = {
 					if(!mentor) return res.status(404).send({message: "Mentor Not Found![2]"});
 					return mentor
 						.update(req.body, { fields: Object.keys(req.body) })
-						.then( updateDetail => {
-							
-							res.status(200).send(mentor)
-						 } )
+						.then( updateDetail => res.status(200).send(mentor) )
 						.catch( errorUpdate => res.status(400).send(errorUpdate) );
 				}
 			)
-			.catch( error => res.status(404).send({message:'error!!'}) );
+			.catch( error => res.status(404).send(error) );
 	},
 	getCountries(req, res) {
 		return Country

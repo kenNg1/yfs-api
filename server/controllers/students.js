@@ -5,13 +5,32 @@ const Country 	= require('../models').country;
 const City 	= require('../models').city;
 
 module.exports = {
+	profile(req, res) {
+		return Student
+			.findOne({
+				where: {user_id:req.params.userId},
+				include: [
+						{model: Country, attributes: { exclude: ['id'] }},
+						{model:Event, include:[{model:Country}]}
+				],
+			})
+
+			.then(
+				student => {
+					
+					if (!student) {
+					return res.status(400).send({success: false, message: 'Student not Found'});
+					}
+				
+					return res.status(200).send(student);
+
+			})
+			.catch(error => res.status(400).send(error));
+	},
 	profileUpdate(req, res, next) {
 		return Student
 			.findOne({
 				where:{userId:req.params.userId},
-				// include: [
-				// 		{model: Country}
-				// ]
 			})
 			.then(
 				student => {
@@ -234,43 +253,4 @@ module.exports = {
 				}
 	})
 	},
-		// below api not really needed?
-		profile(req, res) {
-			
-			// EventStudent.findOne({
-			// 	where: { studentId: req.params.studentId },
-			// 	include: [{model:Event}]					
-			// })
-			// .then(events => {
-				return Student
-					.findOne({
-						where: {user_id:req.params.userId},
-						include: [
-								{model: Country, attributes: { exclude: ['id'] }},
-								{model:Event, include:[{model:Country}]}
-						],
-					})
-	 
-					.then(
-						student => {
-							
-							// student.dataValues.EventsEnrolled = events;
-						
-							if (!student) {
-							return res.status(400).send({success: false, message: 'Student not Found'});
-							}
-						
-							// const data = {
-							// 	id: user.id,
-							// 	username: user.username,
-							// 	email: user.email
-							// }
-							// student.dataValues.country = 
-							return res.status(200).send(student);
-	
-					})
-					.catch(error => res.status(400).send(error));
-				// } )
-				// .catch( error => console.log(error) );
-		},
 };
