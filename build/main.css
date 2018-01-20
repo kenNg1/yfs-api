@@ -2,6 +2,14 @@ body {
   overflow-x: hidden;
 }
 
+.navbar-menu {
+  padding:0;
+}
+
+div#navMenuColorwhite-example.navbar-menu.is-active.pulldown-animation {
+  z-index:999;
+}
+
 .title-left-favicon {
   display:inline;
   margin-left: 5px;
