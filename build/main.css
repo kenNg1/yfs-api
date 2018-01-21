@@ -81,13 +81,13 @@ div.box ul li {
 } */
   
 .navbar-burger {
-  margin-top: 12px;
+  margin-top: 6px;
 }
 
 @media screen and (min-width: 1024px){
 
   .navbar-end{
-    margin-top: 15px;
+    margin-top: 10px;
   }
     
 }
